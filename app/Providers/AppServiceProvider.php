@@ -11,9 +11,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    //jiheui lee : to get rid of deprecated messages
+    public function register(): void
     {
-        //
+        if (config('app.debug')) {
+            error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+        }
     }
 
     /**
