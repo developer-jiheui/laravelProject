@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.footer')
 @extends('layouts.main')
 @section('content')
     <article class="portfolio active" data-page="portfolio">
@@ -244,4 +244,4 @@
         ✏️ Edit Portfolio
     </a>
 @endsection
-@extends('layouts.footer')
+@extends('layouts.header')

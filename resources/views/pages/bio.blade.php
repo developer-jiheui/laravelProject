@@ -1,4 +1,5 @@
-@extends('layouts.header')
+@extends('layouts.footer')
+
 @extends('layouts.main')
 @section('content')
     <article class="bio active" data-page="bio">
@@ -23,4 +24,4 @@
     </a>
 @endsection
 
-@extends('layouts.footer')
+@extends('layouts.header')

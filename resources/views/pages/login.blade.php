@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.footer')
 @extends('layouts.main')
 @section('content')
     <article class="login active" data-page="login">
@@ -49,4 +49,4 @@
         </section>
     </article>
 @endsection
-@extends('layouts.footer')
+@extends('layouts.header')
