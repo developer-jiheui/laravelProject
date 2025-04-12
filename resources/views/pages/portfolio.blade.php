@@ -8,14 +8,13 @@
         </header>
 
         <section class="projects">
-
             <ul class="filter-list">
 
                 <li class="filter-item">
                     <button class="active" data-filter-btn>All</button>
                 </li>
 
-                <li class="filter-item">
+                <!--<li class="filter-item">
                     <button data-filter-btn>Web design</button>
                 </li>
 
@@ -25,7 +24,12 @@
 
                 <li class="filter-item">
                     <button data-filter-btn>Web development</button>
+                </li>-->
+                @foreach (\App\Models\Portfolio::categories() as $category)
+                <li class="filter-item">
+                    <button data-filter-btn>{{$category}}</button>
                 </li>
+                @endforeach
 
             </ul>
 
@@ -47,17 +51,11 @@
                         <button data-select-item>All</button>
                     </li>
 
-                    <li class="select-item">
-                        <button data-select-item>Web design</button>
-                    </li>
-
-                    <li class="select-item">
-                        <button data-select-item>Applications</button>
-                    </li>
-
-                    <li class="select-item">
-                        <button data-select-item>Web development</button>
-                    </li>
+                    @foreach (\App\Models\Portfolio::categories() as $category)
+                <li class="select-item">
+                    <button data-select-item>{{$category}}</button>
+                </li>
+                @endforeach
 
                 </ul>
 
