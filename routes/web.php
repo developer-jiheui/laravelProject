@@ -24,7 +24,7 @@ Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/page/{name}', [PageController::class, 'show'])->name('page.show');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::middleware('auth')->get('/edit/home', function () {
+/*Route::middleware('auth')->get('/edit/home', function () {
     return view('edit.home');
 })->name('edit.home');
 Route::middleware('auth')->get('/edit/bio', function () {
@@ -39,3 +39,4 @@ Route::middleware('auth')->get('/edit/portfolio', function () {
 Route::middleware('auth')->get('/edit/resume', function () {
     return view('edit.resume');
 })->name('edit.resume');
+*/
