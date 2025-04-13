@@ -25,7 +25,7 @@
 
                                 <span class="dot"></span>
 
-                                <time datetime="2022-02-23">Fab 23, 2022</time>
+                                <time datetime="2022-02-23">Feb. 23, 2022</time>
                             </div>
 
                             <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
@@ -53,7 +53,7 @@
 
                                 <span class="dot"></span>
 
-                                <time datetime="2022-02-23">Fab 23, 2022</time>
+                                <time datetime="2022-02-23">Feb. 23, 2022</time>
                             </div>
 
                             <h3 class="h3 blog-item-title">Best fonts every designer</h3>
@@ -81,7 +81,7 @@
 
                                 <span class="dot"></span>
 
-                                <time datetime="2022-02-23">Fab 23, 2022</time>
+                                <time datetime="2022-02-23">Feb. 23, 2022</time>
                             </div>
 
                             <h3 class="h3 blog-item-title">Design digest #80</h3>
@@ -109,7 +109,7 @@
 
                                 <span class="dot"></span>
 
-                                <time datetime="2022-02-23">Fab 23, 2022</time>
+                                <time datetime="2022-02-23">Feb. 23, 2022</time>
                             </div>
 
                             <h3 class="h3 blog-item-title">UI interactions of the week</h3>
@@ -137,7 +137,7 @@
 
                                 <span class="dot"></span>
 
-                                <time datetime="2022-02-23">Fab 23, 2022</time>
+                                <time datetime="2022-02-23">Feb. 23, 2022</time>
                             </div>
 
                             <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
@@ -165,7 +165,7 @@
 
                                 <span class="dot"></span>
 
-                                <time datetime="2022-02-23">Fab 23, 2022</time>
+                                <time datetime="2022-02-23">Feb. 23, 2022</time>
                             </div>
 
                             <h3 class="h3 blog-item-title">Design digest #79</h3>
