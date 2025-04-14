@@ -1066,10 +1066,14 @@
     font-weight: var(--fw-300);
   }
 
-  .project-like {
+  .project-interact {
     grid-column: 2 / 3;
     grid-row: 2 / 4;
     justify-self: end;
+  }
+  div.project-interact { /* for admin; icons display on top of each other otherwise */
+    display: flex;
+    gap: 5px;
   }
 
 
@@ -1186,6 +1190,8 @@
   }
 
   .contact-form { margin-bottom: 10px; }
+
+  .form {color:var(--white-2);}
 
   .form-title { margin-bottom: 20px; }
 

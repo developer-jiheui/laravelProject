@@ -25,7 +25,7 @@
 
                 <button class="filter-select" data-select>
 
-                    <div class="select-value" data-selecct-value>Select category</div>
+                    <div class="select-value" data-select-value>Select category</div>
 
                     <div class="select-icon">
                         <ion-icon name="chevron-down"></ion-icon>
@@ -67,9 +67,21 @@
 
                         <p class="project-category">{{$item['CATEGORY']}}</p>
                     </a>
-                    <button class="icon-box project-like">
+                    {{--@guest('admin')
+                    <button class="icon-box project-interact">
                         <ion-icon name="thumbs-up-outline" role="img" class="md hydrated" aria-label="Like"></ion-icon>
                     </button>
+                    @endguest
+                    @auth('admin')--}}
+                    <div class=project-interact>
+                    <a class="icon-box" href="{{route('edit.portfolio')}}?id={{$item['PORTFOLIO_ID']}}">
+                        <ion-icon name="pencil-outline" role="img" class="md hydrated" aria-label="Edit"></ion-icon>
+                    </a>
+                    <a class="icon-box">
+                        <ion-icon name="trash-outline" role="img" class="md hydrated" aria-label="Delete"></ion-icon>
+                    </a>
+                    </div>
+                    {{--@endauth--}}
                 </li> <!-- TODO likes -->
                 @endforeach
 
@@ -79,13 +91,13 @@
         </section>
 
     </article>
-    {{--    @auth--}}
+    {{--    @auth('admin')--}}
     {{--        <a href="{{ route('edit.home') }}" class="edit-page-button">--}}
-    {{--            ✏️ Edit Home--}}
+    {{--            <ion-icon name="add-outline" role="img" class="md hydrated" aria-label="Add"></ion-icon> New Portfolio Item--}}
     {{--        </a>--}}
     {{--    @endauth--}}
     <a href="{{ route('edit.portfolio') }}" class="edit-page-button">
-        ✏️ Edit Portfolio
+    <ion-icon name="add-outline" role="img" class="md hydrated" aria-label="Add"></ion-icon> New Portfolio Item
     </a>
 @endsection
 @extends('layouts.header')
