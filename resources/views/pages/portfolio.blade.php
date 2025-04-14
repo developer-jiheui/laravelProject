@@ -67,6 +67,9 @@
 
                         <p class="project-category">{{$item['CATEGORY']}}</p>
                     </a>
+                    <button class="icon-box project-like">
+                        <ion-icon name="thumbs-up-outline" role="img" class="md hydrated" aria-label="Like"></ion-icon>
+                    </button>
                 </li> <!-- TODO likes -->
                 @endforeach
 
