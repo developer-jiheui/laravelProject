@@ -74,12 +74,16 @@
                     @endguest
                     @auth('admin')--}}
                     <div class=project-interact>
-                    <a class="icon-box" href="{{route('edit.portfolio')}}?id={{$item['PORTFOLIO_ID']}}">
+                    <a class="icon-box" href="{{route('edit.portfolio', ['id' => $item['PORTFOLIO_ID']])}}">
                         <ion-icon name="pencil-outline" role="img" class="md hydrated" aria-label="Edit"></ion-icon>
                     </a>
-                    <a class="icon-box">
+                    <form action="{{route('edit.portfolio.delete', ['id' => $item['PORTFOLIO_ID']])}}" method=post>
+                        @csrf
+                        @method('delete')
+                    <button class="icon-box">
                         <ion-icon name="trash-outline" role="img" class="md hydrated" aria-label="Delete"></ion-icon>
-                    </a>
+                    </button>
+                    </form>
                     </div>
                     {{--@endauth--}}
                 </li> <!-- TODO likes -->
