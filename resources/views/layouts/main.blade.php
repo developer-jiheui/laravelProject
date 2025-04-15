@@ -1,3 +1,6 @@
+@include('layouts.header')
+@yield('header')
+
 <!--
   - #MAIN
 -->
@@ -28,7 +31,8 @@
 {{--    @include('layouts.edit')--}}
 </main>
 
-
+@include('layouts.footer')
+@yield('footer')
 
 
 

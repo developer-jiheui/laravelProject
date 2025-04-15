@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('EMAIL', 100)->unique('EMAIL');
             $table->string('AVATAR', 100)->nullable();
             $table->string('PW', 64)->nullable();
-            $table->integer('USER_TYPE')->nullable();
+            $table->integer('USER_TYPE')->default(1);
             $table->string('FIRST_NAME', 100)->nullable();
             $table->string('LAST_NAME', 100)->nullable();
             $table->integer('REGISTER_TYPE')->nullable();

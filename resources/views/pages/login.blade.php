@@ -1,14 +1,11 @@
-@extends('layouts.footer')
 @extends('layouts.main')
 @section('content')
     <article class="login active" data-page="login">
-
         <header>
             <h2 class="h2 article-title">Log in</h2>
         </header>
 
         <section class="content-card" style="max-width: 500px; margin: 2rem auto;">
-
             <form method="POST" action="{{ route('login') }}" class="form login-form">
                 @csrf
 
@@ -45,8 +42,6 @@
                 Don't have an account?
                 <a href="{{ route('page.show', ['name' => 'register']) }}" style="color: var(--orange-yellow-crayola); font-weight: var(--fw-500);">Register</a>
             </p>
-
         </section>
     </article>
 @endsection
-@extends('layouts.header')
