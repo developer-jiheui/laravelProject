@@ -39,3 +39,6 @@ Route::get('/edit/portfolio', function () {
 Route::middleware('auth')->get('/edit/resume', function () {
     return view('edit.resume');
 })->name('edit.resume');
+Route::get('/admin', function () {
+    return view('pages.home');
+})->middleware('auth');

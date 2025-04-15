@@ -32,4 +32,6 @@ class UserController extends Controller
         // Redirect to login page
         return redirect()->route('page.show', ['name' => 'login'])->with('success', 'Registration successful. Please log in.');
     }
+
+
 }
