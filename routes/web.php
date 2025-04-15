@@ -40,4 +40,6 @@ Route::middleware('auth')->get('/edit/resume', function () {
     return view('edit.resume');
 })->name('edit.resume');
 
-Route::delete('/edit/portfolio','App\Http\Controllers\PortfolioController@delete')->name('edit.portfolio.delete');
+Route::delete('/edit/portfolio/delete','App\Http\Controllers\PortfolioController@delete')->name('edit.portfolio.delete'); // TODO authenticate user
+Route::patch('/edit/portfolio/update','App\Http\Controllers\PortfolioController@edit')->name('edit.portfolio.update');
+Route::post('/edit/portfolio/create','App\Http\Controllers\PortfolioController@create')->name('edit.portfolio.create');

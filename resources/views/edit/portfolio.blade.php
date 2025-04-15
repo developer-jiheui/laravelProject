@@ -13,8 +13,13 @@
                 @endif
             </h2>
         </header>
-        <form class=form>
+        <form class=form action="{{isset($_GET['id'])?route('edit.portfolio.update', ['id'=>$_GET['id']]):route('edit.portfolio.create')}}" method=post enctype=multipart/form-data>
             @csrf
+            @if(isset($_GET['id']))
+                @method('patch')
+            @else
+                @method('post')
+            @endif
             <div class="input-wrapper">
                 <label for=title class=form-label>Title</label>
                 <input name=title id=title class=form-input>

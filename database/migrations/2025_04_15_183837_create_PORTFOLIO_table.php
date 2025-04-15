@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('CATEGORY', 20)->nullable();
             $table->string('PROJECT_URL', 1024)->nullable();
             $table->date('CREATED_AT')->nullable();
+            $table->date('UPDATED_AT')->nullable();
             $table->string('IMAGE_URL', 1024)->nullable();
             $table->integer('LIKE_COUNT')->nullable();
         });
