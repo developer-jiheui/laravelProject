@@ -42,3 +42,4 @@ Route::middleware('auth')->get('/edit/resume', function () {
 Route::get('/admin', function () {
     return view('pages.home');
 })->middleware('auth');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

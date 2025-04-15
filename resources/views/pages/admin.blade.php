@@ -1,11 +1,9 @@
 @extends('layouts.main')
 @section('content')
-    <article class="register active" data-page="register">
-
+    <article class="admin active" data-page="admin">
         <header>
-            <h2 class="h2 article-title">Register</h2>
+            <h2 class="h2 article-title">ADMIN</h2>
         </header>
-{{-- | EMAIL| AVATAR | PW | USER_TYPE | FIRST_NAME | LAST_NAME | REGISTER_TYPE | REGISTER_DT | ADDRESS | PHONE_NUM | BIO  | JOB_TITLE | BIRTHDAY | INSTAGRAM_URL | LINKEDIN_URL | GITHUB_URL |--}}
         <section class="content-card" style="max-width: 500px; margin: 2rem auto;">
 
             <form method="POST" action="{{ route('register') }}" class="form register-form">
@@ -13,15 +11,11 @@
 
                 <div class="input-wrapper">
                     <label for="profile_photo" class="form-label h5">Profile Photo</label>
-                    <input type="file" id="avatar" name="avatar" class="form-input" accept="image/*">
+                    <input type="file" id="profile_photo" name="profile_photo" class="form-input" accept="image/*">
                 </div>
                 <div class="input-wrapper">
-                    <label for="name" class="form-label h5">First Name</label>
-                    <input type="text" id="first_name" name="first_name" class="form-input" required placeholder="First Name">
-                </div>
-                <div class="input-wrapper">
-                    <label for="name" class="form-label h5">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" class="form-input" required placeholder="Last Name">
+                    <label for="name" class="form-label h5">Name</label>
+                    <input type="text" id="name" name="name" class="form-input" required placeholder="Full name">
                 </div>
 
                 <div class="input-wrapper">
@@ -44,11 +38,13 @@
                 </div>
             </form>
 
-            <p class="form-text" style="text-align: center; margin-top: 1.5rem; color: var(--light-gray); font-size: var(--fs-7);">
-                Already have an account?
-                <a href="{{ route('page.show', ['name' => 'login']) }}" style="color: var(--orange-yellow-crayola); font-weight: var(--fw-500);">Log in</a>
-            </p>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>
 
         </section>
+
+
     </article>
 @endsection
