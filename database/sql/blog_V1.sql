@@ -1,10 +1,10 @@
 -- DROP the database if it exists
 -- CREATE THE DATABASE
-DROP DATABASE IF EXISTS blog;
-CREATE DATABASE IF NOT EXISTS blog;
+DROP DATABASE IF EXISTS blog_db;
+CREATE DATABASE IF NOT EXISTS blog_db;
 
 -- Use the database
-USE blog;
+USE blog_db;
 
 -- drop in case the table exists.
 DROP TABLE IF EXISTS USER;

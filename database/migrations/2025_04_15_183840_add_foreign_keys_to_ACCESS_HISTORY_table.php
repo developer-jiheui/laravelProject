@@ -13,14 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+        Schema::table('ACCESS_HISTORY', function (Blueprint $table) {
+            $table->foreign(['EMAIL'], 'FK_ACCESS_HISTORY_USER')->references(['EMAIL'])->on('USER')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });
     }
 
@@ -31,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('ACCESS_HISTORY', function (Blueprint $table) {
+            $table->dropForeign('FK_ACCESS_HISTORY_USER');
+        });
     }
 };
