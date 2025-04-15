@@ -16,17 +16,28 @@ class UserController extends Controller
     {
         // Validate user input
         $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
         ]);
 
         // Create user
+        //change this when we changed database to lower case
+//        User::create([
+//            'first_name' => $request->first_name,
+//            'last_name' => $request->last_name,
+//            'email' => $request->email,
+//            'password' => Hash::make($request->password),
+//            'user_type' => 1, // default role
+//        ]);
+        // Create user
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'user', // default role
+            'FIRST_NAME' => $request->first_name,
+            'LAST_NAME'  => $request->last_name,
+            'EMAIL'      => $request->email,
+            'PW'         => Hash::make($request->password),
+            'USER_TYPE'  => 1, // default: common user
         ]);
 
         // Redirect to login page

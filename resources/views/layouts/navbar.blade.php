@@ -5,8 +5,9 @@
 
             <li class="navbar-item">
                 <a href="{{ route('page.show', ['name' => 'home']) }}"
-                   class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'home' ? 'active' : '' }}"
-                   data-nav-link>
+                   class="navbar-link {{request()->routeIs('home') ||
+                                       (request()->routeIs('page.show') && request()->route('name') === 'home')? 'active': ''}}"
+                                        data-nav-link>
                     Home
                 </a>
             </li>

@@ -13,7 +13,9 @@ class PageController extends Controller
         $pages = ['home', 'bio', 'resume', 'portfolio', 'blog','login' , 'register'];
         $auth_pages = ['admin'];
 
-
+//        if(!(view()->exists($name))){
+//            return view('pages.home');
+//        }
         if (in_array($name, $pages)) {
             return view('pages.' . $name);
         }

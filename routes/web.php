@@ -17,13 +17,23 @@ use App\Http\Controllers\Auth\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+//Route::get('/', function () {
+//    return redirect()->route('page.show', ['name' => 'home']);
+//});
+Route::get('/', [PageController::class, 'show'])->defaults('name', 'home')->name('home');
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/page/{name}', [PageController::class, 'show'])->name('page.show');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+Route::get('/admin', function () {
+    return view('pages.home');
+})->middleware('auth')->name('home');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
 
 Route::middleware('auth')->get('/edit/home', function () {
     return view('edit.home');
@@ -40,10 +50,7 @@ Route::get('/edit/portfolio', function () {
 Route::middleware('auth')->get('/edit/resume', function () {
     return view('edit.resume');
 })->name('edit.resume');
-Route::get('/admin', function () {
-    return view('pages.home');
-})->middleware('auth');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 Route::delete('/edit/portfolio/delete','App\Http\Controllers\PortfolioController@delete')->name('edit.portfolio.delete'); // TODO authenticate user
 Route::patch('/edit/portfolio/update','App\Http\Controllers\PortfolioController@edit')->name('edit.portfolio.update');
