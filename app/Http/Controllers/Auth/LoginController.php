@@ -27,11 +27,11 @@ class LoginController extends Controller
             // 0 admin
             // 1 common user
             $user = Auth::user();
-            if ($user->user_type == 0) {
+            if ($user->USER_TYPE === '0' || (int)$user->USER_TYPE === 0) {
                 return redirect()->intended('/admin');
             }
 
-            return redirect()->intended('/profile');
+            return redirect()->intended('/');
         }
 
         // Login failed

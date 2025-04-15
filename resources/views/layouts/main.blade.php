@@ -21,7 +21,7 @@
         {{--TODO : authenticated user type and change it to admin navbar or normal user navbar        --}}
         @if (Auth::check())
         {{--  <p>Logged in as: {{ Auth::user()->EMAIL }}</p>--}}
-            @if (Auth::user()->user_type == 0)
+            @if (Auth::user()->USER_TYPE === 0)
 
                 @include('admin.navbar')
                 @yield('admin_navbar')

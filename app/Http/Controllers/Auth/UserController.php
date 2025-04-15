@@ -17,9 +17,9 @@ class UserController extends Controller
         // Validate user input
         $request->validate([
             'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:6',
+            'last_name'  => 'required|string|max:255',
+            'email'      => 'required|email|unique:USER,EMAIL',
+            'password'   => 'required|confirmed|min:6',
         ]);
 
         // Create user

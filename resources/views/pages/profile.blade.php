@@ -3,12 +3,16 @@
     <article class="register active" data-page="register">
 
         <header>
-            <h2 class="h2 article-title">Register</h2>
+            <h2 class="h2 article-title">PROFILE</h2>
         </header>
 
+            @if (Auth::check())
+                @if (Auth::user()->USER_TYPE === 1)
         <section class="content-card" style="max-width: 500px; margin: 2rem auto;">
+                {{--  <p>Logged in as: {{ Auth::user()->EMAIL }}</p>--}}
 
-            <form method="POST" action="{{ route('register') }}" class="form register-form">
+
+            <form method="POST" action="{{ route('edit.profile',['id'=>Auth::user()->USER_ID]) }}" class="form register-form">
                 @csrf
 
                 <div class="input-wrapper">
@@ -16,13 +20,17 @@
                     <input type="file" id="profile_photo" name="profile_photo" class="form-input" accept="image/*">
                 </div>
                 <div class="input-wrapper">
-                    <label for="name" class="form-label h5">Name</label>
-                    <input type="text" id="name" name="name" class="form-input" required placeholder="Full name">
+                    <label for="name" class="form-label h5">First Name</label>
+                    <input type="text" id="first_name" name="first_name" class="form-input" required placeholder="{{Auth::user()->FIRST_NAME}}">
+                </div>
+                <div class="input-wrapper">
+                    <label for="name" class="form-label h5">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" class="form-input" required placeholder="{{Auth::user()->LAST_NAME}}">
                 </div>
 
                 <div class="input-wrapper">
                     <label for="email" class="form-label h5">Email</label>
-                    <input type="email" id="email" name="email" class="form-input" required placeholder="Email address">
+                    <input type="email" id="email" name="email" class="form-input" required placeholder="{{Auth::user()->EMAIL}}">
                 </div>
 
                 <div class="input-wrapper">
@@ -36,14 +44,18 @@
                 </div>
 
                 <div class="input-wrapper" style="margin-top: 1.5rem;">
-                    <button type="submit" class="form-btn login-highlight">Register</button>
+                    <button type="submit" class="form-btn login-highlight">Edit Profile</button>
                 </div>
             </form>
 
-            <p class="form-text" style="text-align: center; margin-top: 1.5rem; color: var(--light-gray); font-size: var(--fs-7);">
-                Already have an account?
-                <a href="{{ route('page.show', ['name' => 'login']) }}" style="color: var(--orange-yellow-crayola); font-weight: var(--fw-500);">Log in</a>
-            </p>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="form-btn login-highlight">Log Out</button>
+            </form>
+
+            @endif
+            @endif
+
 
         </section>
     </article>

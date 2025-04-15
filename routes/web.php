@@ -17,21 +17,19 @@ use App\Http\Controllers\Auth\UserController;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-//Route::get('/', function () {
-//    return redirect()->route('page.show', ['name' => 'home']);
-//});
+//-------JIHEUI
+
 Route::get('/', [PageController::class, 'show'])->defaults('name', 'home')->name('home');
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/page/{name}', [PageController::class, 'show'])->name('page.show');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/admin', function () {
-    return view('pages.home');
-})->middleware('auth')->name('home');
+Route::get('/admin', function () {return view('pages.admin');})->middleware('auth');
+Route::get('/profile', function () {return view('pages.profile');})->middleware('auth')->name('home');
+Route::middleware('auth')->post('/edit/profile', [UserController::class, 'edit_profile'])->name('edit.profile');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+//-----------------
 
 
 
@@ -44,14 +42,13 @@ Route::middleware('auth')->get('/edit/bio', function () {
 Route::middleware('auth')->get('/edit/blog', function () {
     return view('edit.blog');
 })->name('edit.blog');
+
+
+//VIATRIX ---------------
+
 Route::get('/edit/portfolio', function () {
     return view('edit.portfolio');
 })->name('edit.portfolio');
-Route::middleware('auth')->get('/edit/resume', function () {
-    return view('edit.resume');
-})->name('edit.resume');
-
-
 Route::delete('/edit/portfolio/delete','App\Http\Controllers\PortfolioController@delete')->name('edit.portfolio.delete'); // TODO authenticate user
 Route::patch('/edit/portfolio/update','App\Http\Controllers\PortfolioController@edit')->name('edit.portfolio.update');
 Route::post('/edit/portfolio/create','App\Http\Controllers\PortfolioController@create')->name('edit.portfolio.create');
