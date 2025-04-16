@@ -7,10 +7,8 @@
             <h2 class="h2 article-title">MY PROFILE</h2>
         </header>
 
-            @if (Auth::check())
-                @if (Auth::user()->USER_TYPE === 1)
-                {{--  <p>Logged in as: {{ Auth::user()->EMAIL }}</p>--}}
-
+{{--            @if (Auth::check())--}}
+{{--                @if (Auth::user()->USER_TYPE === 0)--}}
 
 
                 <div class="sidebar-info">
@@ -131,8 +129,8 @@
                 <button type="submit" class="form-btn login-highlight">Log Out</button>
             </form>
 
-            @endif
-            @endif
+{{--            @endif--}}
+{{--            @endif--}}
 
 
     </article>

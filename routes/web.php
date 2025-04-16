@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Auth\AdminController;
 
 
 /*
@@ -18,17 +19,37 @@ use App\Http\Controllers\Auth\UserController;
 */
 
 //-------JIHEUI
-
+//PAGES
 Route::get('/', [PageController::class, 'show'])->defaults('name', 'home')->name('home');
-Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/page/{name}', [PageController::class, 'show'])->name('page.show');
-Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/admin', function () {return view('pages.admin');})->middleware('auth');
-Route::get('/profile', function () {return view('pages.profile');})->middleware('auth')->name('home');
-Route::middleware('auth')->post('/edit/profile', [UserController::class, 'edit_profile'])->name('edit.profile');
+//LOGIN, LOG OUT
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+//USER CRUD
+Route::post('/register', [UserController::class, 'register'])->name('register');
+Route::middleware('auth')->post('/edit/profile', [UserController::class, 'edit_profile'])->name('edit.profile');
 Route::middleware('auth')->post('/update/profile', [UserController::class, 'update'])->name('update.profile');
+
+//ADMIN
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.home');
+});
+Route::get('/admin/profile', function () {return view('admin.profile');})->middleware('auth')->name('admin.profile');
+
+Route::get('/admin-debug', function () {
+    $users = \App\Models\User::all();
+    return view('pages.admin', compact('users'));
+});
+Route::middleware(['auth'])->group(function () {
+    Route::post('/admin/promote/{id}', [AdminController::class, 'promote'])->name('admin.promote');
+    Route::delete('/admin/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
+});
+//USER
+Route::get('/profile', function () {return view('pages.profile');})->middleware('auth')->name('home');
 
 //-----------------
 

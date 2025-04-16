@@ -11,7 +11,7 @@ class PageController extends Controller
     {
         // List of allowed pages (to prevent errors or unwanted access)
         $pages = ['home', 'bio', 'resume', 'portfolio', 'blog','login' , 'register'];
-        $admin_pages = ['admin'];
+        $admin_pages = ['admin','profile'];
         $user_pages = ['profile'];
 //        if(!(view()->exists($name))){
 //            return view('pages.home');
