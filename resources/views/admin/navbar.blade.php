@@ -12,21 +12,21 @@
                 </a>
             </li>
 
-            <li class="navbar-item">
-                <a href="{{ route('page.show', ['name' => 'bio']) }}"
-                   class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'bio' ? 'active' : '' }}"
-                   data-nav-link>
-                    Bio
-                </a>
-            </li>
+{{--            <li class="navbar-item">--}}
+{{--                <a href="{{ route('page.show', ['name' => 'bio']) }}"--}}
+{{--                   class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'bio' ? 'active' : '' }}"--}}
+{{--                   data-nav-link>--}}
+{{--                    Bio--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
-            <li class="navbar-item">
-                <a href="{{ route('page.show', ['name' => 'resume']) }}"
-                   class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'resume' ? 'active' : '' }}"
-                   data-nav-link>
-                    Resume
-                </a>
-            </li>
+{{--            <li class="navbar-item">--}}
+{{--                <a href="{{ route('page.show', ['name' => 'resume']) }}"--}}
+{{--                   class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'resume' ? 'active' : '' }}"--}}
+{{--                   data-nav-link>--}}
+{{--                    Resume--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
             <li class="navbar-item">
                 <a href="{{ route('page.show', ['name' => 'portfolio']) }}"
@@ -46,7 +46,7 @@
 
             <li class="navbar-item">
                 <a href="{{ route('admin.profile') }}"
-                   class="navbar-link login-highlight {{ request()->routeIs('admin.profile') ? 'active' : '' }}"
+                   class="navbar-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}"
                    data-nav-link>
                     Profile
                 </a>
