@@ -33,9 +33,13 @@ Route::middleware('auth')->get('/edit/bio', function () {
 Route::middleware('auth')->get('/edit/blog', function () {
     return view('edit.blog');
 })->name('edit.blog');
-Route::middleware('auth')->get('/edit/portfolio', function () {
+Route::get('/edit/portfolio', function () {
     return view('edit.portfolio');
 })->name('edit.portfolio');
 Route::middleware('auth')->get('/edit/resume', function () {
     return view('edit.resume');
 })->name('edit.resume');
+
+Route::delete('/edit/portfolio/delete','App\Http\Controllers\PortfolioController@delete')->name('edit.portfolio.delete'); // TODO authenticate user
+Route::patch('/edit/portfolio/update','App\Http\Controllers\PortfolioController@edit')->name('edit.portfolio.update');
+Route::post('/edit/portfolio/create','App\Http\Controllers\PortfolioController@create')->name('edit.portfolio.create');
