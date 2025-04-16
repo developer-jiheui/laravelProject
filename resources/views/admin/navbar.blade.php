@@ -1,4 +1,4 @@
-@section('navbar')
+@section('admin_navbar')
 
     <nav class="navbar">
         <ul class="navbar-list">
@@ -7,7 +7,7 @@
                 <a href="{{ route('page.show', ['name' => 'home']) }}"
                    class="navbar-link {{request()->routeIs('home') ||
                                        (request()->routeIs('page.show') && request()->route('name') === 'home')? 'active': ''}}"
-                                        data-nav-link>
+                   data-nav-link>
                     Home
                 </a>
             </li>
@@ -45,10 +45,10 @@
             </li>
 
             <li class="navbar-item">
-                <a href="{{ route('page.show', ['name' => 'login']) }}"
-                   class="navbar-link login-highlight {{ request()->routeIs('page.show') && request()->route('name') === 'login' ? 'active' : '' }}"
+                <a href="{{ route('page.show', ['name' => 'admin']) }}"
+                   class="navbar-link login-highlight {{ request()->routeIs('page.show') && request()->route('name') === 'admin' ? 'active' : '' }}"
                    data-nav-link>
-                    Log in
+                    Admin
                 </a>
             </li>
 
