@@ -131,44 +131,86 @@ class UserController extends Controller
 
 
 
-//    public function update(Request $request, $id)
-//    {
-//        $user = \App\Models\User::findOrFail($id);
-//
-//        $request->validate([
-//            'first_name' => 'required|string|max:255',
-//            'last_name'  => 'required|string|max:255',
-//            'email'      => 'required|email|unique:USER,EMAIL,' . $user->USER_ID . ',USER_ID',
-//            'password'   => 'nullable|confirmed|min:6',
-//            'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-//            // add other fields validations here...
-//        ]);
-//
-//        // Upload avatar if present
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'email'      => 'required|email|unique:USER,EMAIL,' . $user->USER_ID . ',USER_ID',
+            'password'   => 'nullable|confirmed|min:6',
+            'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            // add other fields validations here...
+        ]);
+
+        // Upload avatar if present
+        if ($request->hasFile('profile_photo')) {
+            $file = $request->file('profile_photo');
+            $filename = uniqid('avatar_', true) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/avatars'), $filename); // ✅ Move directly to public/images/avatars
+
+            $user->AVATAR = 'images/avatars/' . $filename; // ✅ Save the path to use in <img src="{{ asset(...) }}">
+        }
 //        if ($request->hasFile('profile_photo')) {
 //            $avatarPath = $request->file('profile_photo')->store('avatars', 'public');
 //            $user->AVATAR = $avatarPath;
 //        }
-//
-//        $user->FIRST_NAME = $request->first_name;
-//        $user->LAST_NAME  = $request->last_name;
-//        $user->EMAIL      = $request->email;
-//        $user->ADDRESS    = $request->address;
-//        $user->PHONE_NUM  = $request->phone_num;
-//        $user->BIO        = $request->bio;
-//        $user->JOB_TITLE  = $request->job_title;
-//        $user->BIRTHDAY   = $request->birthday;
-//        $user->GITHUB_URL = $request->github;
-//        $user->LINKEDIN_URL = $request->linked_in;
-//        $user->INSTAGRAM_URL = $request->instagram;
-//
+
+        if ($request->filled('first_name')) {
+            $user->FIRST_NAME = $request->first_name;
+        }
+
+        if ($request->filled('last_name')) {
+            $user->LAST_NAME = $request->last_name;
+        }
+
+        if ($request->filled('email')) {
+            $user->EMAIL = $request->email;
+        }
+
+        if ($request->filled('address')) {
+            $user->ADDRESS = $request->address;
+        }
+
+        if ($request->filled('phone_num')) {
+            $user->PHONE_NUM = $request->phone_num;
+        }
+
+        if ($request->filled('bio')) {
+            $user->BIO = $request->bio;
+        }
+
+        if ($request->filled('job_title')) {
+            $user->JOB_TITLE = $request->job_title;
+        }
+
+        if ($request->filled('birthday')) {
+            $user->BIRTHDAY = $request->birthday;
+        }
+
+        if ($request->filled('github')) {
+            $user->GITHUB_URL = $request->github;
+        }
+
+        if ($request->filled('linked_in')) {
+            $user->LINKEDIN_URL = $request->linked_in;
+        }
+
+        if ($request->filled('instagram')) {
+            $user->INSTAGRAM_URL = $request->instagram;
+        }
+
+        if ($request->filled('password')) {
+            $user->PW = bcrypt($request->password);
+        }
 //        if (!empty($request->password)) {
 //            $user->PW = bcrypt($request->password);
 //        }
-//
-//        $user->save();
-//
-//        return redirect()->back()->with('success', 'Profile updated!');
-//    }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated!');
+    }
 
 }

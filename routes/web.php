@@ -28,6 +28,7 @@ Route::get('/admin', function () {return view('pages.admin');})->middleware('aut
 Route::get('/profile', function () {return view('pages.profile');})->middleware('auth')->name('home');
 Route::middleware('auth')->post('/edit/profile', [UserController::class, 'edit_profile'])->name('edit.profile');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::middleware('auth')->post('/update/profile', [UserController::class, 'update'])->name('update.profile');
 
 //-----------------
 
