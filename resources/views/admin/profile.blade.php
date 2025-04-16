@@ -35,7 +35,7 @@
 
 
 
-                <form method="POST" action="{{ route('edit.profile') }}" enctype="multipart/form-data" class="form register-form">                @csrf
+                <form method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data" class="form register-form">                @csrf
 
                     <div class="input-wrapper">
                         <label for="profile_photo" class="form-label h5">Profile Photo</label>
