@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -44,9 +44,9 @@ class UserController extends Controller
         return redirect()->route('page.show', ['name' => 'login'])->with('success', 'Registration successful. Please log in.');
     }
 
-    public function update(Request $request, $id)
+    public function edit_profile(Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
 
         $request->validate([
             'first_name' => 'required|string|max:255',
@@ -74,17 +74,49 @@ class UserController extends Controller
         }
 
         // ✅ STEP 3: Update remaining fields
-        $user->FIRST_NAME = $request->first_name;
-        $user->LAST_NAME = $request->last_name;
-        $user->EMAIL = $request->email;
-        $user->ADDRESS = $request->address;
-        $user->PHONE_NUM = $request->phone_num;
-        $user->BIO = $request->bio;
-        $user->JOB_TITLE = $request->job_title;
-        $user->BIRTHDAY = $request->birthday;
-        $user->GITHUB_URL = $request->github;
-        $user->LINKEDIN_URL = $request->linked_in;
-        $user->INSTAGRAM_URL = $request->instagram;
+        if ($request->filled('first_name')) {
+            $user->FIRST_NAME = $request->first_name;
+        }
+
+        if ($request->filled('last_name')) {
+            $user->LAST_NAME = $request->last_name;
+        }
+
+        if ($request->filled('email')) {
+            $user->EMAIL = $request->email;
+        }
+
+        if ($request->filled('address')) {
+            $user->ADDRESS = $request->address;
+        }
+
+        if ($request->filled('phone_num')) {
+            $user->PHONE_NUM = $request->phone_num;
+        }
+
+        if ($request->filled('bio')) {
+            $user->BIO = $request->bio;
+        }
+
+        if ($request->filled('job_title')) {
+            $user->JOB_TITLE = $request->job_title;
+        }
+
+        if ($request->filled('birthday')) {
+            $user->BIRTHDAY = $request->birthday;
+        }
+
+        if ($request->filled('github')) {
+            $user->GITHUB_URL = $request->github;
+        }
+
+        if ($request->filled('linked_in')) {
+            $user->LINKEDIN_URL = $request->linked_in;
+        }
+
+        if ($request->filled('instagram')) {
+            $user->INSTAGRAM_URL = $request->instagram;
+        }
 
         if ($request->filled('password')) {
             $user->PW = bcrypt($request->password);
