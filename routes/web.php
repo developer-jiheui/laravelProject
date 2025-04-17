@@ -74,3 +74,4 @@ Route::get('/edit/portfolio', function () {
 Route::delete('/edit/portfolio/delete','App\Http\Controllers\PortfolioController@delete')->name('edit.portfolio.delete'); // TODO authenticate user
 Route::patch('/edit/portfolio/update','App\Http\Controllers\PortfolioController@edit')->name('edit.portfolio.update');
 Route::post('/edit/portfolio/create','App\Http\Controllers\PortfolioController@create')->name('edit.portfolio.create');
+Route::post('/portfolio/like','App\Http\Controllers\PortfolioController@like')->name('pages.portfolio.like');

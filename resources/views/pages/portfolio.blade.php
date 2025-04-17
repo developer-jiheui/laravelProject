@@ -66,11 +66,16 @@
 
                         <p class="project-category">{{$item['CATEGORY']}}</p>
                     </a>
-                    {{--@if(Auth::user()->user_type!=0||Auth::user()->id!=$item['USER_ID'])
-                    <button class="icon-box project-interact">
-                        <ion-icon name="thumbs-up-outline" role="img" class="md hydrated" aria-label="Like"></ion-icon>
+                    @auth
+                    @if(Auth::user()->USER_TYPE!=0||Auth::user()->USER_ID!=$item['USER_ID'])
+                    <form action="{{route('pages.portfolio.like',['id'=>$item['PORTFOLIO_ID']])}}" method=post class=project-interact>
+                        @csrf
+                    <button class="icon-box">
+                        <ion-icon {{\Illuminate\Support\Facades\DB::scalar('SELECT COUNT(*) FROM likes WHERE portfolio_id = ? AND user_id=? LIMIT 1',[$item['PORTFOLIO_ID'],Auth::user()->USER_ID])?'name=thumbs-up aria-label=Liked':'name=thumbs-up-outline aria-label=Like'}} role="img" class="md hydrated"></ion-icon>
+                        {{$item['LIKE_COUNT']>0?$item['LIKE_COUNT']:""}}
                     </button>
-                    @else--}}
+                    </form>
+                    @else
                     <div class=project-interact>
                     <a class="icon-box" href="{{route('edit.portfolio', ['id' => $item['PORTFOLIO_ID']])}}">
                         <ion-icon name="pencil-outline" role="img" class="md hydrated" aria-label="Edit"></ion-icon>
@@ -83,7 +88,8 @@
                     </button>
                     </form>
                     </div>
-                    {{--@endif--}}
+                    @endif
+                    @endauth
                 </li> <!-- TODO likes -->
                 @endforeach
 
@@ -93,9 +99,11 @@
         </section>
 
     </article>
-    {{--@if(Auth::user()->user_type==0)--}}
+    @auth
+    @if(Auth::user()->USER_TYPE==0)
     <a href="{{ route('edit.portfolio') }}" class="edit-page-button">
     <ion-icon name="add-outline" role="img" class="md hydrated" aria-label="Add"></ion-icon> New Portfolio Item
     </a>
-    {{--@endif--}}
+    @endif
+    @endauth
 @endsection
