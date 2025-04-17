@@ -53,3 +53,12 @@ Route::get('/edit/portfolio', function () {
 Route::delete('/edit/portfolio/delete','App\Http\Controllers\PortfolioController@delete')->name('edit.portfolio.delete'); // TODO authenticate user
 Route::patch('/edit/portfolio/update','App\Http\Controllers\PortfolioController@edit')->name('edit.portfolio.update');
 Route::post('/edit/portfolio/create','App\Http\Controllers\PortfolioController@create')->name('edit.portfolio.create');
+
+//GEORGE ---------------
+
+Route::get('/edit/blog', function () {
+    return view('edit.blog');
+})->name('edit.blog');
+Route::delete('/edit/blog/delete','App\Http\Controllers\BlogController@delete')->name('edit.blog.delete');
+Route::patch('/edit/blog/update','App\Http\Controllers\BlogController@edit')->name('edit.blog.update');
+Route::post('/edit/blog/create','App\Http\Controllers\BlogController@create')->name('edit.blog.create');
