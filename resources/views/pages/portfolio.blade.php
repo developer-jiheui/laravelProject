@@ -90,7 +90,7 @@
                     </div>
                     @endif
                     @endauth
-                </li> <!-- TODO likes -->
+                </li>
                 @endforeach
 
 

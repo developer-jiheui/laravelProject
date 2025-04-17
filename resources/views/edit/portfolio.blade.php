@@ -1,7 +1,22 @@
 @extends('layouts.footer')
 @extends('layouts.main')
 @section('content')
-    {{-- TODO check user is the same one who is allowed to edit the item --}}
+    @php
+        if (isset($_GET['id'])) {
+            $item = \App\Models\Portfolio::find($_GET['id']);
+            if (Auth::user()===null||Auth::user()->USER_ID!=$item['USER_ID']) {
+                http_response_code(304); // FORBIDDEN // TODO return a page instead of just blank content
+                die();
+            }
+        }
+        else {
+            $item = [];
+            if (Auth::user()===null||Auth::user()->USER_TYPE!=0) {
+                http_response_code(304);
+                die();
+            }
+        }
+    @endphp
     <article class=active data-page="portfolio">
 
         <header>
@@ -22,19 +37,19 @@
             @endif
             <div class="input-wrapper">
                 <label for=title class=form-label>Title</label>
-                <input name=title id=title class=form-input>
+                <input name=title id=title class=form-input value="{{$item['TITLE']??''}}">
             </div>
             <div class="input-wrapper">
                 <label for=desc class=form-label>Description</label>
-                <textarea name=desc id=desc class=form-input></textarea>
+                <textarea name=desc id=desc class=form-input>{{$item['DESCRIPTION']??''}}</textarea>
             </div>
             <div class="input-wrapper">
                 <label for=url class=form-label>URL</label>
-                <input name=url id=url class=form-input type=url>
+                <input name=url id=url class=form-input type=url value="{{$item['PROJECT_URL']??''}}">
             </div>
             <div class="input-wrapper">
                 <label for=category class=form-label>Category</label>
-                <input name=category id=category class=form-input list=categories>
+                <input name=category id=category class=form-input list=categories value="{{$item['CATEGORY']??''}}">
             </div>
             <datalist id=categories>
             @foreach (\App\Models\Portfolio::categories() as $category)
@@ -44,9 +59,9 @@
             <div class="input-wrapper">
                 <label for=img class=form-label>Image</label>
                 <div style=display:flex;justify-content:space-between;align-items:center>
-                    <span>No image selected</span> <!-- TODO overflow when name too long -->
+                    <span id=imgname>{{ltrim(strrchr($item['IMAGE_URL']??'/No image','/'),'/')}}</span> <!-- TODO overflow when name too long -->
                 <label class=icon-box><ion-icon name="cloud-upload-outline" role=img aria-label="Upload new icon&hellip;"></ion-icon>
-                  <input type=file name=img id=img style=position:absolute;top:-999px>
+                  <input type=file name=img id=img style=position:absolute;top:-999px onchange="document.getElementById('imgname').textContent=this.files[0].name">
                 </label></div>
             </div>
 
