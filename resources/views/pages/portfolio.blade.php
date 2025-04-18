@@ -68,7 +68,7 @@
                     </a>
                     @auth
                     @if(Auth::user()->USER_TYPE!=0||Auth::user()->USER_ID!=$item['USER_ID'])
-                    <form action="{{route('page.portfolio.like',['id'=>$item['PORTFOLIO_ID']])}}" method=post class=project-interact>
+                    <form action="{{route('page.portfolio.like',['id'=>$item['PORTFOLIO_ID'],'cat'=>$_GET['cat']??null])}}" method=post class=project-interact>
                         @csrf
                     <button class="icon-box">
                         <ion-icon {{\Illuminate\Support\Facades\DB::scalar('SELECT COUNT(*) FROM likes WHERE portfolio_id = ? AND user_id=? LIMIT 1',[$item['PORTFOLIO_ID'],Auth::user()->USER_ID])?'name=thumbs-up aria-label=Liked':'name=thumbs-up-outline aria-label=Like'}} role="img" class="md hydrated"></ion-icon>
