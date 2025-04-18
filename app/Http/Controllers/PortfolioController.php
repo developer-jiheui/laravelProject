@@ -20,7 +20,7 @@ class PortfolioController extends Controller {
     public function edit(Request $request) {
         $portfolioItem = Portfolio::find($_GET['id']);
         self::portfolioItemFromRequest($portfolioItem,$request);
-        return view('pages.portfolio');
+        return view('pages.portfoliofull');
     }
     public function create(Request $request) {
 

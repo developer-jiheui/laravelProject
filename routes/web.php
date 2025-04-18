@@ -68,10 +68,16 @@ Route::middleware('auth')->get('/edit/blog', function () {
 
 //VIATRIX ---------------
 
-Route::get('/edit/portfolio', function () {
+Route::get('/page/portfolio', function () {
+    return view('page.portfolio');
+})->name('page.portfolio');
+Route::get('/page/portfoliofull', function () {
+    return view('page.portfoliofull');
+})->name('page.portfoliofull');
+Route::middleware(['auth'])->get('/edit/portfolio', function () {
     return view('edit.portfolio');
 })->name('edit.portfolio');
-Route::delete('/edit/portfolio/delete','App\Http\Controllers\PortfolioController@delete')->name('edit.portfolio.delete'); // TODO authenticate user
-Route::patch('/edit/portfolio/update','App\Http\Controllers\PortfolioController@edit')->name('edit.portfolio.update');
-Route::post('/edit/portfolio/create','App\Http\Controllers\PortfolioController@create')->name('edit.portfolio.create');
-Route::post('/portfolio/like','App\Http\Controllers\PortfolioController@like')->name('pages.portfolio.like');
+Route::middleware(['auth'])->delete('/edit/portfolio/delete','App\Http\Controllers\PortfolioController@delete')->name('edit.portfolio.delete');
+Route::middleware(['auth'])->patch('/edit/portfolio/update','App\Http\Controllers\PortfolioController@edit')->name('edit.portfolio.update');
+Route::middleware(['auth'])->post('/edit/portfolio/create','App\Http\Controllers\PortfolioController@create')->name('edit.portfolio.create');
+Route::middleware(['auth'])->post('/portfolio/like','App\Http\Controllers\PortfolioController@like')->name('page.portfolio.like');
