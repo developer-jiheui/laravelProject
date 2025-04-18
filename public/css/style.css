@@ -1104,8 +1104,8 @@
       max-width: 100%;
     }
 
-    a.icon-box:hover, a.icon-box:focus, button.icon-box:hover, button.icon-box:focus { background: var(--bg-gradient-yellow-1); }
-    a.icon-box:hover::before, a.icon-box:focus::before, button.icon-box:hover::before, button.icon-box:focus::before { background: var(--bg-gradient-yellow-2); }
+    a.icon-box:hover, a.icon-box:focus, button.icon-box:hover, button.icon-box:focus, label.icon-box:hover, label.icon-box:focus-within { background: var(--bg-gradient-yellow-1); }
+    a.icon-box:hover::before, a.icon-box:focus::before, button.icon-box:hover::before, button.icon-box:focus::before, label.icon-box:hover::before, label.icon-box:focus-within::before { background: var(--bg-gradient-yellow-2); }
 
     .project-full-interact {
       display: flex;
