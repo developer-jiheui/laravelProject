@@ -12,9 +12,8 @@
             @foreach (\App\Models\Blog::all()->toArray() as $blogItem)
                 <li class="blog-post-item">
                     <a href="#">
-
                         <figure class="blog-banner-box">
-                            <img src="./assets/images/blog-1.jpg" alt="{{ $blogItem['TITLE'] }}" loading="lazy">
+                            <img src="/storage/portfolioImgs/{{ $blogItem['IMAGE_URL'] }}" alt="{{ $blogItem['TITLE'] }}" loading="lazy"><!-- /storage/portfolioImgs/1XBC4MScNJCaJWpg8w7SWALDvkV4gxmbDyEZUeR6.jpg | asset($blogItem['IMAGE_URL']) -->
                         </figure>
 
                         <div class="blog-content">
