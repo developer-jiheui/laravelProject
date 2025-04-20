@@ -7,8 +7,6 @@
             <h2 class="h2 article-title">MY PROFILE</h2>
         </header>
 
-{{--            @if (Auth::check())--}}
-{{--                @if (Auth::user()->USER_TYPE === 0)--}}
 
 
                 <div class="sidebar-info">

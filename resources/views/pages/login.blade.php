@@ -6,6 +6,15 @@
         </header>
 
         <section class="content-card" style="max-width: 500px; margin: 2rem auto;">
+            @if ($errors->any())
+                <div class="alert alert-danger" style="color: red; padding: 10px; margin-bottom: 1rem;">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form method="POST" action="{{ route('login') }}" class="form login-form">
                 @csrf
 
