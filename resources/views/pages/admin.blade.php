@@ -1,50 +1,50 @@
 @extends('layouts.main')
+
 @section('content')
     <article class="admin active" data-page="admin">
         <header>
             <h2 class="h2 article-title">ADMIN</h2>
         </header>
-        <section class="content-card" style="max-width: 500px; margin: 2rem auto;">
 
-            <form method="POST" action="{{ route('register') }}" class="form register-form">
-                @csrf
+        <h2 class="h2">User Management</h2>
 
-                <div class="input-wrapper">
-                    <label for="profile_photo" class="form-label h5">Profile Photo</label>
-                    <input type="file" id="profile_photo" name="profile_photo" class="form-input" accept="image/*">
-                </div>
-                <div class="input-wrapper">
-                    <label for="name" class="form-label h5">Name</label>
-                    <input type="text" id="name" name="name" class="form-input" required placeholder="Full name">
-                </div>
+        <table class="table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Comment</th>
+                <th>User Type</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($users as $user)
+                <tr style="border-bottom: 1px solid #ccc;">
+                    <td>{{ $user->USER_ID }}</td>
+                    <td>{{ $user->FIRST_NAME }} {{ $user->LAST_NAME }}</td>
+                    <td>{{ $user->EMAIL }}</td>
+                    <td>{{ $user->BIO ?? 'N/A' }}</td>
+                    <td>{{ $user->USER_TYPE === 0 ? 'Admin' : 'User' }}</td>
+                    <td>
+                        @if($user->USER_TYPE !== 0)
+                            <form method="POST" action="{{ route('admin.promote', $user->USER_ID) }}" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-success">Make Admin</button>
+                            </form>
+                        @endif
 
-                <div class="input-wrapper">
-                    <label for="email" class="form-label h5">Email</label>
-                    <input type="email" id="email" name="email" class="form-input" required placeholder="Email address">
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="password" class="form-label h5">Password</label>
-                    <input type="password" id="password" name="password" class="form-input" required placeholder="Password">
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="password_confirmation" class="form-label h5">Confirm Password</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" required placeholder="Confirm password">
-                </div>
-
-                <div class="input-wrapper" style="margin-top: 1.5rem;">
-                    <button type="submit" class="form-btn login-highlight">Register</button>
-                </div>
-            </form>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="form-btn login-highlight">Log Out</button>
-            </form>
-
-        </section>
-
+                        <form method="POST" action="{{ route('admin.delete', $user->USER_ID) }}" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
 
     </article>
 @endsection

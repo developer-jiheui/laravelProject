@@ -314,7 +314,6 @@
 
 
 
-
   /*-----------------------------------*\
     #SIDEBAR
   \*-----------------------------------*/
@@ -900,12 +899,9 @@
     #PORTFOLIO
   \*-----------------------------------*/
 
-  .filter-list { display: none; }
-
-  .filter-select-box {
-    position: relative;
-    margin-bottom: 25px;
-  }
+.portfolio-full {
+  position: relative;
+}
 
   .filter-select {
     background: var(--eerie-black-2);
@@ -963,10 +959,27 @@
     gap: 30px;
     margin-bottom: 10px;
   }
+  .filter-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+    padding-left: 5px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
 
-  .project-item { display: none; }
+  .filter-item a {
+    color: var(--light-gray);
+    font-size: var(--fs-5);
+    transition: var(--transition-1);
+  }
 
-  .project-item.active {
+  .filter-item a:hover, .filter-item a:focus { color: var(--light-gray-70); }
+
+  .filter-item a.active { color: var(--orange-yellow-crayola); }
+
+  .project-item {
     display: grid;
     animation: scaleUp 0.25s ease forwards;
   }
@@ -1076,7 +1089,31 @@
     gap: 5px;
   }
 
+  .project-popup {display:none;}
+  .project-popup:target {
+    display: block;
+    position: absolute;
+  }
 
+  .project-description {
+      white-space: pre-wrap;
+      color: var(--white-2);
+    }
+    .project-full-img {
+      margin: 1em 0;
+      max-width: 100%;
+    }
+
+    a.icon-box:hover, a.icon-box:focus, button.icon-box:hover, button.icon-box:focus, label.icon-box:hover, label.icon-box:focus-within { background: var(--bg-gradient-yellow-1); }
+    a.icon-box:hover::before, a.icon-box:focus::before, button.icon-box:hover::before, button.icon-box:focus::before, label.icon-box:hover::before, label.icon-box:focus-within::before { background: var(--bg-gradient-yellow-2); }
+
+    .project-full-interact {
+      display: flex;
+      position: absolute;
+      gap: 5px;
+      right: 10px;
+      top: 10px;
+    }
 
   /*-----------------------------------*\
     #BLOG
@@ -1650,27 +1687,8 @@
      */
 
     .article-title { padding-bottom: 20px; }
+    
 
-    .filter-select-box { display: none; }
-
-    .filter-list {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 25px;
-      padding-left: 5px;
-      margin-bottom: 30px;
-    }
-
-    .filter-item button {
-      color: var(--light-gray);
-      font-size: var(--fs-5);
-      transition: var(--transition-1);
-    }
-
-    .filter-item button:hover { color: var(--light-gray-70); }
-
-    .filter-item button.active { color: var(--orange-yellow-crayola); }
 
     /* portfolio and blog grid */
 
@@ -1795,7 +1813,9 @@
      */
 
     .project-list { grid-template-columns: repeat(3, 1fr); }
-
+    .project-full-interact {
+      top:75px;
+    }
 
 
     /**

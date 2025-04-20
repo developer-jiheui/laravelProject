@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -59,20 +61,23 @@ class UserController extends Controller
 
         // ✅ STEP 2: Upload profile photo to Cloudinary if present
         if ($request->hasFile('profile_photo')) {
-            $base64Image = base64_encode(file_get_contents($request->file('profile_photo')->getRealPath()));
+            $file = $request->file('profile_photo');
+            $base64Image = base64_encode(file_get_contents($file->getRealPath()));
 
-            $response = Http::asForm()->post('https://api.cloudinary.com/v1_1/blogAvatars/image/upload', [
-                'file' => 'data:image/jpeg;base64,' . $base64Image,
-                'upload_preset' => 'profile_photos', // Set this up in Cloudinary dashboard
+            $response = Http::asForm()->post('https://api.cloudinary.com/v1_1/' . env('CLOUDINARY_CLOUD_NAME') . '/image/upload', [
+                'file' => 'data:' . $file->getMimeType() . ';base64,' . $base64Image,
+                'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
+                'public_id' => 'avatar_' . uniqid('cloud_', true), // ✅ Clean, no slashes
             ]);
 
             if ($response->successful()) {
                 $user->AVATAR = $response->json('secure_url');
+                $user->save();
+                return back()->with('success', 'Avatar uploaded and profile updated!');
             } else {
-                return back()->withErrors(['profile_photo' => 'Image upload failed.']);
+                return back()->withErrors(['profile_photo' => 'Cloudinary error: ' . $response->body()]);
             }
         }
-
         // ✅ STEP 3: Update remaining fields
         if ($request->filled('first_name')) {
             $user->FIRST_NAME = $request->first_name;
@@ -152,10 +157,6 @@ class UserController extends Controller
 
             $user->AVATAR = 'images/avatars/' . $filename; // ✅ Save the path to use in <img src="{{ asset(...) }}">
         }
-//        if ($request->hasFile('profile_photo')) {
-//            $avatarPath = $request->file('profile_photo')->store('avatars', 'public');
-//            $user->AVATAR = $avatarPath;
-//        }
 
         if ($request->filled('first_name')) {
             $user->FIRST_NAME = $request->first_name;
