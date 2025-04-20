@@ -11,39 +11,40 @@ class PageController extends Controller
     {
         // List of allowed pages (to prevent errors or unwanted access)
         $pages = ['home', 'bio', 'resume', 'portfolio', 'blog','login' , 'register'];
-        $admin_pages = ['admin','profile'];
+        $admin_pages = ['admin'];
         $user_pages = ['profile'];
-//        if(!(view()->exists($name))){
-//            return view('pages.home');
-//        }
+
         if (in_array($name, $pages)) {
             return view('pages.' . $name);
         }
+        //direct to the pages that only admins can access
         if(in_array($name, $admin_pages)) {
+            //check if the user is logged in
             if (Auth::check()) {
                 $user = Auth::user();
+                //check if the usertype is admin
                 if ($user->USER_TYPE === 0) {
                     return view('pages.' . $name);
                 } else {
-                    abort(403, 'Unauthorized access');
+                    //if unauthorized user get try to access admin page, they will be logged out and then redirect to login page
+                    Auth::logout();
+                    return redirect()->route('login')->with('error', 'Access denied. Please log in again.');
                 }
             } else {
                 return redirect()->route('login');
             }
         }
+
         if(in_array($name, $user_pages)) {
             if (Auth::check()) {
                 $user = Auth::user();
-                if ($user->USER_TYPE === 1) {
                     return view('pages.' . $name);
-                } else {
-                    abort(403, 'Unauthorized access');
-                }
             } else {
-                return redirect()->route('login');
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Access denied. Please log in again.');
             }
         }
-        // If not found, return 404
-        abort(404);
+        // If not found, go to home
+        return redirect()->route('home')->with('error', 'There is no such page');
     }
 }
