@@ -81,3 +81,12 @@ Route::middleware(['auth'])->delete('/edit/portfolio/delete','App\Http\Controlle
 Route::middleware(['auth'])->patch('/edit/portfolio/update','App\Http\Controllers\PortfolioController@edit')->name('edit.portfolio.update');
 Route::middleware(['auth'])->post('/edit/portfolio/create','App\Http\Controllers\PortfolioController@create')->name('edit.portfolio.create');
 Route::middleware(['auth'])->post('/portfolio/like','App\Http\Controllers\PortfolioController@like')->name('page.portfolio.like');
+
+//GEORGE ---------------
+
+Route::get('/edit/blog', function () {
+    return view('edit.blog');
+})->name('edit.blog');
+Route::delete('/edit/blog/delete','App\Http\Controllers\BlogController@delete')->name('edit.blog.delete');
+Route::patch('/edit/blog/update','App\Http\Controllers\BlogController@edit')->name('edit.blog.update');
+Route::post('/edit/blog/create','App\Http\Controllers\BlogController@create')->name('edit.blog.create');
