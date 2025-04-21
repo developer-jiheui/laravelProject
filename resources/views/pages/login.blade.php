@@ -15,7 +15,9 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ route('login') }}" class="form login-form">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 2rem;">
+
+                <form method="POST" action="{{ route('login') }}" class="form login-form">
                 @csrf
 
                 <div class="input-wrapper">
@@ -41,13 +43,14 @@
                         placeholder="Enter your password"
                     >
                 </div>
+                    <div class="input-wrapper" style="display: flex; justify-content: center; margin-top: 5rem;">
+                        <div style="display: flex; justify-content: center;">
+                            <button type="submit" class="form-btn login-highlight">Log In</button>
+                        </div>
+                    </div>
 
-                <div class="input-wrapper" style="margin-top: 1.5rem;">
-                    <button type="submit" class="form-btn login-highlight">Log In</button>
-                </div>
             </form>
-
-            <p class="form-text" style="text-align: center; margin-top: 1.5rem; color: var(--light-gray); font-size: var(--fs-7);">
+            <p class="form-text" style="text-align: center; color: var(--light-gray); font-size: var(--fs-7);">
                 Don't have an account?
                 <a href="{{ route('page.show', ['name' => 'register']) }}" style="color: var(--orange-yellow-crayola); font-weight: var(--fw-500);">Register</a>
             </p>
