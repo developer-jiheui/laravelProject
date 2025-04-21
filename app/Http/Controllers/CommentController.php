@@ -15,7 +15,7 @@ class commentController extends Controller {
         $commentItem->BLOG_ID = $_POST['blog_id'];//TODO: change it to fetch blog id.
         
         $commentItem->save();
-        return view('pages.blogfull');
+        return redirect()->route('page.blogfull',['id'=>$_POST['blog_id']]);
     }
 
     public function delete() {

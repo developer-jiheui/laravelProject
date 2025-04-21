@@ -92,6 +92,7 @@ Route::get('/edit/blog', function () {
 Route::delete('/edit/blog/delete','App\Http\Controllers\BlogController@delete')->name('edit.blog.delete');
 Route::patch('/edit/blog/update','App\Http\Controllers\BlogController@edit')->name('edit.blog.update');
 Route::post('/edit/blog/create','App\Http\Controllers\BlogController@create')->name('edit.blog.create');
+Route::middleware(['auth'])->post('/page/blog/comment','App\Http\Controllers\CommentController@create')->name('page.blog.comment');
 
 //route to set up blogfull
 Route::get('/page/blogfull', function () {

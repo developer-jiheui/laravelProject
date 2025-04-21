@@ -27,5 +27,20 @@
     </header>
         <img class=project-full-img alt src="{{asset($blogItem['IMAGE_URL'])}}"><!-- asset gets you the full url from partial url -->
         <p class=project-description>{{$blogItem['CONTENTS']}}</p>
+        <h3>Comments</h3> {{-- semantically this should be an H2 and the page should start with an H1. --}}
+        <form method=post action="{{route('page.blog.comment')}}">
+            @csrf
+            <fieldset>
+                <legend>Add a comment&hellip;</legend>
+                <textarea name=content></textarea>
+                <input type=hidden name=blog_id value="{{$_GET['id']}}">
+                <button type=submit>Add comment</button>
+            </fieldset>
+        </form>
+        @foreach(\App\Models\Comment::where('BLOG_ID','=',$_GET['id'])->get()->toArray() as $comment)
+        <section>
+            {{$comment['CONTENTS']}}
+        </section>
+        @endforeach
     </article>
 @endsection
