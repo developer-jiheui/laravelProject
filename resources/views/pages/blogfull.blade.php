@@ -28,6 +28,7 @@
         <img class=project-full-img alt src="{{asset($blogItem['IMAGE_URL'])}}"><!-- asset gets you the full url from partial url -->
         <p class=project-description>{{$blogItem['CONTENTS']}}</p>
         <h3>Comments</h3> {{-- semantically this should be an H2 and the page should start with an H1. --}}
+        @auth
         <form method=post action="{{route('page.blog.comment')}}">
             @csrf
             <fieldset>
@@ -37,9 +38,14 @@
                 <button type=submit>Add comment</button>
             </fieldset>
         </form>
+        @endauth
         @foreach(\App\Models\Comment::where('BLOG_ID','=',$_GET['id'])->get()->toArray() as $comment)
-        <section>
-            {{$comment['CONTENTS']}}
+            @php
+                $commenter = \App\Models\User::find($comment['USER_ID']);
+            @endphp
+        <section class=blog-comment>
+            <h4><figure class=avatar-box><img alt src="{{asset($commenter['AVATAR']??'images/my-avatar.png')}}"></figure> {{$commenter['FIRST_NAME']}} {{$commenter['LAST_NAME']}} at <time>{{$comment['CREATED_AT']}}</time></h4>
+            <p>{{$comment['CONTENTS']}}
         </section>
         @endforeach
     </article>

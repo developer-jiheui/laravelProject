@@ -1202,6 +1202,9 @@
 
 .blog-full, .blog-full textarea, .blog-full button {color: #fff;}
 
+.blog-comment h4 * {display:inline;}
+.blog-comment p {white-space: pre-wrap;}
+
 
   /*-----------------------------------*\
     #CONTACT
