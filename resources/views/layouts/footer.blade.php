@@ -1,7 +1,8 @@
 <!--
   - custom js link
 -->
-<script src="./frontend/js/script.js"></script>
+
+<script src="{{ asset('js/script.js') }}"></script>
 
 <!--
   - ionicon link
