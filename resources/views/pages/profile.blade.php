@@ -76,14 +76,16 @@
 
             @endforeach
 
-            <div class="input-wrapper" style="margin-top: 1.5rem;">
+            <div class="input-wrapper" style="display: flex; justify-content: center; margin-top: 1.5rem;">
                 <button type="submit" class="form-btn login-highlight">Edit Profile</button>
             </div>
         </form>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
+            <div class="input-wrapper" style="display: flex; justify-content: center; margin-top: 1.5rem;">
             <button type="submit" class="form-btn login-highlight">Log Out</button>
+            </div>
         </form>
 
     </article>
