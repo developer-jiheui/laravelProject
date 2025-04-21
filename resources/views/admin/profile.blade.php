@@ -104,29 +104,5 @@
         </form>
 
     </article>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJBgLFtPeoudAH2Wkaqn6lkQbY8TwZqxU&libraries=places"></script>
-    <script>
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const input = document.getElementById('autocomplete');
-            const autocomplete = new google.maps.places.Autocomplete(input, {
-                types: ['geocode']  // only addresses
-            });
-
-            // // Optional: Bias results toward the user's location
-            // if (navigator.geolocation) {
-            //     navigator.geolocation.getCurrentPosition(function (position) {
-            //         const geolocation = {
-            //             lat: position.coords.latitude,
-            //             lng: position.coords.longitude
-            //         };
-            //         const circle = new google.maps.Circle({
-            //             center: geolocation,
-            //             radius: position.coords.accuracy
-            //         });
-            //         autocomplete.setBounds(circle.getBounds());
-            //     });
-            // }
-        });
-    </script>
 @endsection
