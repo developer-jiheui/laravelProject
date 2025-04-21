@@ -16,9 +16,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        // Optional: check again just in case
-        if (Auth::user()->USER_TYPE !== 0) {
-            abort(403, 'Unauthorized');
+        $user = Auth::user();
+
+        // If user not logged in or user is not admin
+        if (!$user || $user->USER_TYPE !== 0) {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Access denied. Please log in again.');
         }
 
         $users = User::all();
@@ -41,6 +44,21 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'User promoted to admin.');
     }
+
+    public function demote($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->USER_TYPE === 0) {
+            $user->USER_TYPE = 1;
+            $user->save();
+            return redirect()->back()->with('message', 'User is back to a normal user.');
+
+        }
+
+        return redirect()->back()->with('success', 'User is already just a user');
+    }
+
 
     /**
      * Delete a user.
