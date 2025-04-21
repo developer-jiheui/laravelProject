@@ -24,26 +24,20 @@ class UserController extends Controller
             'password'   => 'required|confirmed|min:6',
         ]);
 
-        // Create user
-        //change this when we changed database to lower case
-//        User::create([
-//            'first_name' => $request->first_name,
-//            'last_name' => $request->last_name,
-//            'email' => $request->email,
-//            'password' => Hash::make($request->password),
-//            'user_type' => 1, // default role
-//        ]);
-        // Create user
+        // Check if this is the first user
+        $isFirstUser = User::count() === 0;
+
+        // Create user and set USER_TYPE accordingly
         User::create([
             'FIRST_NAME' => $request->first_name,
             'LAST_NAME'  => $request->last_name,
             'EMAIL'      => $request->email,
             'PW'         => Hash::make($request->password),
-            'USER_TYPE'  => 1, // default: common user
+            'USER_TYPE'  => $isFirstUser ? 0 : 1, // 0 = admin, 1 = regular user
         ]);
 
-        // Redirect to login page
-        return redirect()->route('page.show', ['name' => 'login'])->with('success', 'Registration successful. Please log in.');
+        return redirect()->route('page.show', ['name' => 'login'])
+            ->with('success', 'Registration successful. Please log in.');
     }
 
     public function edit_profile(Request $request)
