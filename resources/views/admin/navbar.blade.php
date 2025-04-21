@@ -12,22 +12,6 @@
                 </a>
             </li>
 
-{{--            <li class="navbar-item">--}}
-{{--                <a href="{{ route('page.show', ['name' => 'bio']) }}"--}}
-{{--                   class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'bio' ? 'active' : '' }}"--}}
-{{--                   data-nav-link>--}}
-{{--                    Bio--}}
-{{--                </a>--}}
-{{--            </li>--}}
-
-{{--            <li class="navbar-item">--}}
-{{--                <a href="{{ route('page.show', ['name' => 'resume']) }}"--}}
-{{--                   class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'resume' ? 'active' : '' }}"--}}
-{{--                   data-nav-link>--}}
-{{--                    Resume--}}
-{{--                </a>--}}
-{{--            </li>--}}
-
             <li class="navbar-item">
                 <a href="{{ route('page.show', ['name' => 'portfolio']) }}"
                    class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'portfolio' ? 'active' : '' }}"
