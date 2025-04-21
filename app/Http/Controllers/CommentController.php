@@ -15,16 +15,31 @@ class commentController extends Controller {
         $commentItem->BLOG_ID = $_POST['blog_id'];//TODO: change it to fetch blog id.
         
         $commentItem->save();
-        return view('pages.blogfull');
+        return redirect()->route('page.blogfull',['id'=>$_POST['blog_id']]);
     }
 
     public function delete() {
         try {
-            \App\Models\Comment::destroy($_GET['id']);
+            $comment = \App\Models\Comment::find($_GET['id']);
+            $blogItem = $comment['BLOG_ID'];
+            $comment->delete();
         }
         catch (\Exception $e) {
             http_response_code(400);
         }
-        return view('pages.blogfull');
+        return redirect()->route('page.blogfull',['id'=>$blogItem]);
+    }
+    public function edit() {
+        try {
+            $comment = Comment::find($_GET['id']);
+            $blogItem = $comment['BLOG_ID'];
+            assert(Auth::user()->USER_ID==$comment['USER_ID']);
+            $comment->CONTENTS = $_POST['content'];
+            $comment->save();
+        }
+        catch (\Exception $e) {
+            http_response_code(400);
+        }
+        return redirect()->route('page.blogfull',['id'=>$blogItem]);
     }
 }
