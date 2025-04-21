@@ -23,7 +23,7 @@ class PortfolioController extends Controller {
     public function create(Request $request) {
         //try {
             $portfolioItem = new Portfolio;
-            //$portfolioItem->USER_ID = Auth::id(); // uncomment when we get login working
+            $portfolioItem->USER_ID = Auth::id();
             $portfolioItem->TITLE = $_POST['title'];
             $portfolioItem->DESCRIPTION = $_POST['desc'];
             $portfolioItem->CATEGORY = $_POST['category'];
