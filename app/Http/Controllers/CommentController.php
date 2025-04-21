@@ -1,23 +1,30 @@
 <?php
-/* //ChatGPT
+namespace App\Http\Controllers;
+use \Illuminate\Support\Facades\Auth;
+use \Illuminate\Support\Facades\Storage;
+use \Illuminate\Support\Facades\DB;
+use \Illuminate\Http\Request;
+use \App\Models\Comment;
 
-use App\Models\Comment;
-use App\Models\Blog;
-use Illuminate\Http\Request;
+class commentController extends Controller {
 
-function store(Request $request, $id)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'comment' => 'required|string',
-    ]);
+    public function create(Request $request) {
+        $commentItem = new Comment;
+        $commentItem->CONTENTS = $_POST['content'];
+        $commentItem->USER_ID = Auth::user()->USER_ID;
+        $commentItem->BLOG_ID = $_POST['blog_id'];//TODO: change it to fetch blog id.
+        
+        $commentItem->save();
+        return view('pages.blogfull');
+    }
 
-    $blog = Blog::findOrFail($id);
-
-    $blog->comments()->create([
-        'name' => $request->name,
-        'comment' => $request->comment,
-    ]);
-
-    return redirect()->route('blogs.show', $id)->with('success', 'Comment added!');
-} */
+    public function delete() {
+        try {
+            \App\Models\Comment::destroy($_GET['id']);
+        }
+        catch (\Exception $e) {
+            http_response_code(400);
+        }
+        return view('pages.blogfull');
+    }
+}
