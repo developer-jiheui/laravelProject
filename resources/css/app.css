@@ -2053,8 +2053,10 @@ textarea.form-input::-webkit-resizer { display: none; }
     object-fit: cover;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-.form-error {
+.info-error {
     color: #ff6b6b;
     font-size: 0.85rem;
-    margin-top: 0.25rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+    display: block;
 }

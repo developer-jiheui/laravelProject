@@ -45,8 +45,8 @@
             </li>
 
             <li class="navbar-item">
-                <a href="{{ route('page.show', ['name' => 'profile']) }}"
-                   class="navbar-link login-highlight {{ request()->routeIs('page.show') && request()->route('name') === 'profile' ? 'active' : '' }}"
+                <a href="{{ route('admin.profile') }}"
+                   class="navbar-link login-highlight {{ request()->routeIs('admin.profile') ? 'active' : '' }}"
                    data-nav-link>
                     Profile
                 </a>

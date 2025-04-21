@@ -199,9 +199,6 @@ class UserController extends Controller
         if ($request->filled('password')) {
             $user->PW = bcrypt($request->password);
         }
-//        if (!empty($request->password)) {
-//            $user->PW = bcrypt($request->password);
-//        }
 
         $user->save();
 

@@ -44,34 +44,46 @@
             </div>
 
             @foreach ([
-                'first_name' => 'First Name',
-                'last_name' => 'Last Name',
-                'email' => 'Email',
-                'password' => 'Password',
-                'password_confirmation' => 'Confirm Password',
-                'address' => 'Address',
-                'phone_num' => 'Phone Number',
-                'bio' => 'Bio',
-                'job_title' => 'Job Title',
-                'birthday' => 'Birthday',
-                'github' => 'GitHub',
-                'linked_in' => 'LinkedIn',
-                'instagram' => 'Instagram',
-            ] as $field => $label)
+                      'first_name' => 'First Name',
+                      'last_name' => 'Last Name',
+                      'email' => 'Email',
+                      'password' => 'Password',
+                      'password_confirmation' => 'Confirm Password',
+                      'address' => 'Address',
+                      'phone_num' => 'Phone Number',
+                      'bio' => 'Bio',
+                      'job_title' => 'Job Title',
+                      'birthday' => 'Birthday',
+                  ] as $field => $label)
 
                 <div class="input-wrapper">
                     <label for="{{ $field }}" class="form-label h5">{{ $label }}</label>
-                    <input
-                        type="{{ in_array($field, ['email']) ? 'email' : ($field === 'password' || $field === 'password_confirmation' ? 'password' : ($field === 'birthday' ? 'date' : 'text')) }}"
-                        id="{{ $field }}"
-                        name="{{ $field }}"
-                        class="form-input"
-                        value="{{ in_array($field, ['password', 'password_confirmation']) ? '' : old($field, Auth::user()[strtoupper($field)]) }}"
-                        placeholder="{{ in_array($field, ['password', 'password_confirmation']) ? $label : '' }}"
-                    >
-                    @error($field)
-                    <p class="form-error">{{ $message }}</p>
-                    @enderror
+                    @if ($field === 'address')
+                        <input
+                            type="text"
+                            id="autocomplete"
+                            name="address"
+                            class="form-input"
+                            value="{{ old('address', Auth::user()->ADDRESS) }}"
+                            placeholder="Address"
+                            autocomplete="off"
+                        >
+                        @error('address')
+                        <div></div><small class="text-danger" style="color:red">{{ $message }}</small>
+                        @enderror
+                    @else
+                        <input
+                            type="{{ in_array($field, ['email']) ? 'email' : ($field === 'password' || $field === 'password_confirmation' ? 'password' : ($field === 'birthday' ? 'date' : 'text')) }}"
+                            id="{{ $field }}"
+                            name="{{ $field }}"
+                            class="form-input"
+                            value="{{ in_array($field, ['password', 'password_confirmation']) ? '' : old($field, Auth::user()[strtoupper($field)]) }}"
+                            placeholder="{{ in_array($field, ['password', 'password_confirmation']) ? $label : '' }}"
+                        >
+                        @error($field)
+                        <div></div><small class="text-danger" style="color:red">{{ $message }}</small>
+                        @enderror
+                    @endif
                 </div>
 
             @endforeach
@@ -84,7 +96,7 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <div class="input-wrapper" style="display: flex; justify-content: center; margin-top: 1.5rem;">
-            <button type="submit" class="form-btn login-highlight">Log Out</button>
+                <button type="submit" class="form-btn login-highlight">Log Out</button>
             </div>
         </form>
 
