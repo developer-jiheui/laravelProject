@@ -88,9 +88,9 @@ Route::get('/profile', function () {return view('pages.profile');})->middleware(
 Route::middleware('auth')->get('/edit/home', function () {
     return view('edit.home');
 })->name('edit.home');
-Route::middleware('auth')->get('/edit/bio', function () {
-    return view('edit.bio');
-})->name('edit.bio');
+Route::middleware('auth')->get('/edit/portfolio', function () {
+    return view('edit.portfolio');
+})->name('edit.portfolio');
 /* Route::middleware('auth')->get('/edit/blog', function () {
     return view('edit.blog');
 })->name('edit.blog'); */
@@ -120,6 +120,9 @@ Route::get('/edit/blog', function () {
 Route::delete('/edit/blog/delete','App\Http\Controllers\BlogController@delete')->name('edit.blog.delete');
 Route::patch('/edit/blog/update','App\Http\Controllers\BlogController@edit')->name('edit.blog.update');
 Route::post('/edit/blog/create','App\Http\Controllers\BlogController@create')->name('edit.blog.create');
+Route::middleware(['auth'])->post('/page/blog/comment','App\Http\Controllers\CommentController@create')->name('page.blog.comment');
+Route::patch('/page/blog/comment/update','App\Http\Controllers\CommentController@edit')->name('page.blog.comment.update');
+Route::delete('/page/blog/comment/delete','App\Http\Controllers\CommentController@delete')->name('page.blog.comment.delete');
 
 //route to set up blogfull
 Route::get('/page/blogfull', function () {
