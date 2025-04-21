@@ -49,7 +49,3 @@
 
 @include('layouts.footer')
 @yield('footer')
-
-
-
-

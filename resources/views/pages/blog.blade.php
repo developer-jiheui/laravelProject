@@ -33,11 +33,7 @@
                             </p>
                         </div>
                     </a>
-                    {{--@if(Auth::user()->user_type!=0||Auth::user()->id!=$blogItem['USER_ID'])
-                    <!-- <button class="icon-box project-interact">
-                        <ion-icon name="thumbs-up-outline" role="img" class="md hydrated" aria-label="Like"></ion-icon>
-                    </button> -->
-                    @else--}}
+                    {{--@if(Auth::user()->user_type==0||Auth::user()->id==$blogItem['USER_ID'])
                     <div class=project-interact>
                     <a class="icon-box" href="{{route('edit.blog', ['id' => $blogItem['BLOG_ID']])}}">
                         <ion-icon name="pencil-outline" role="img" class="md hydrated" aria-label="Edit"></ion-icon>
@@ -49,7 +45,7 @@
                         <ion-icon name="trash-outline" role="img" class="md hydrated" aria-label="Delete"></ion-icon>
                     </button>
                     </form>
-                    </div>
+                    </div>--}}
                     {{--@endif--}}
                 </li>
                 @endforeach
