@@ -60,9 +60,9 @@ Route::get('/profile', function () {return view('pages.profile');})->middleware(
 Route::middleware('auth')->get('/edit/home', function () {
     return view('edit.home');
 })->name('edit.home');
-Route::middleware('auth')->get('/edit/bio', function () {
-    return view('edit.bio');
-})->name('edit.bio');
+Route::middleware('auth')->get('/edit/portfolio', function () {
+    return view('edit.portfolio');
+})->name('edit.portfolio');
 /* Route::middleware('auth')->get('/edit/blog', function () {
     return view('edit.blog');
 })->name('edit.blog'); */
