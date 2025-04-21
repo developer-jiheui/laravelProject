@@ -19,6 +19,24 @@ use App\Http\Controllers\CommentController;
 */
 
 //-------JIHEUI
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessage;
+
+Route::post('/send-email', function (\Illuminate\Http\Request $request) {
+    $data = $request->validate([
+        'senderName' => 'required|string',
+        'senderEmail' => 'required|email',
+        'emailContent' => 'required|string',
+    ]);
+
+    Mail::to('developer.jiheuilee@gmail.com')->send(new ContactMessage($data));
+
+    return response()->json([
+        'message' => 'Email sent to admin!',
+        'senderEmail' => $data['senderEmail']
+    ]);
+});
 //PAGES
 Route::get('/', [PageController::class, 'show'])->defaults('name', 'home')->name('home');
 Route::get('/page/{name}', [PageController::class, 'show'])->name('page.show');

@@ -31,6 +31,13 @@
             @auth
                 @if (Auth::user()->USER_TYPE == 1)
                     <li class="navbar-item">
+                        <a href="{{ route('page.show', ['name' => 'contact']) }}"
+                           class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'contact' ? 'active' : '' }}"
+                           data-nav-link>
+                            Contact
+                        </a>
+                    </li>
+                    <li class="navbar-item">
                         <a href="{{ route('page.show', ['name' => 'profile']) }}"
                            class="navbar-link login-highlight {{ request()->routeIs('page.show') && request()->route('name') === 'profile' ? 'active' : '' }}"
                            data-nav-link>
@@ -54,6 +61,13 @@
                     </li>
                 @endif
             @else
+                <li class="navbar-item">
+                    <a href="{{ route('page.show', ['name' => 'contact']) }}"
+                       class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'contact' ? 'active' : '' }}"
+                       data-nav-link>
+                        Contact
+                    </a>
+                </li>
                 <li class="navbar-item">
                     <a href="{{ route('page.show', ['name' => 'login']) }}"
                        class="navbar-link login-highlight {{ request()->routeIs('page.show') && request()->route('name') === 'login' ? 'active' : '' }}"
