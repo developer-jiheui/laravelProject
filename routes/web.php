@@ -32,10 +32,8 @@ Route::post('/send-email', function (\Illuminate\Http\Request $request) {
             'emailContent' => 'required|string',
         ]);
 
-        Log::info("📩 Sending email to admin@example.com", $data);
-
-        Mail::to('admin@example.com')->send(new ContactMessage($data));
-
+        Log::info("sending email to admin", $data);
+        Mail::to('developer.jiheuilee@gmail.com')->send(new ContactMessage($data));
         return response()->json([
             'message' => '✅ Email sent successfully!',
         ]);
