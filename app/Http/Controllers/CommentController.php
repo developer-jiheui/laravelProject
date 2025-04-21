@@ -12,7 +12,7 @@ class commentController extends Controller {
         $commentItem = new Comment;
         $commentItem->CONTENTS = $_POST['content'];
         $commentItem->USER_ID = Auth::user()->USER_ID;
-        $commentItem->BLOG_ID = $_POST['blog_id'];//TODO: change it to fetch blog id.
+        $commentItem->BLOG_ID = $_POST['blog_id'];
         
         $commentItem->save();
         return redirect()->route('page.blogfull',['id'=>$_POST['blog_id']]);

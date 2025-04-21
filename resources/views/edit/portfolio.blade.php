@@ -59,7 +59,7 @@
             <div class="input-wrapper">
                 <label for=img class=form-label>Image</label>
                 <div style=display:flex;justify-content:space-between;align-items:center>
-                    <span id=imgname>{{ltrim(strrchr($item['IMAGE_URL']??'/No image','/'),'/')}}</span> <!-- TODO overflow when name too long -->
+                    <span id=imgname>{{ltrim(strrchr($item['IMAGE_URL']??'/No image','/'),'/')}}</span> <!-- NOTE text overflowing is a possibility but probably not important since this is just a demo -->
                 <label class=icon-box><ion-icon name="cloud-upload-outline" role=img aria-label="Upload new icon&hellip;"></ion-icon>
                   <input type=file name=img id=img style=position:absolute;top:-999px onchange="document.getElementById('imgname').textContent=this.files[0].name">
                 </label></div>

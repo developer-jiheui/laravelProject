@@ -2,7 +2,13 @@
 @section('content')
 <article class="blog-full active" data-page="blog">
         @php
-            $blogItem = \App\Models\Blog::find($_GET['id']); // TODO return a 404 if it's not found
+            try {
+                $blogItem = \App\Models\Blog::find($_GET['id']);
+            }
+            catch (Exception $e) {
+                http_response_code(404);
+                die();
+            }
         @endphp
 
         <header>  
