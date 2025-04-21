@@ -29,4 +29,17 @@ class commentController extends Controller {
         }
         return redirect()->route('page.blogfull',['id'=>$blogItem]);
     }
+    public function edit() {
+        try {
+            $comment = Comment::find($_GET['id']);
+            $blogItem = $comment['BLOG_ID'];
+            assert(Auth::user()->USER_ID==$comment['USER_ID']);
+            $comment->CONTENTS = $_POST['content'];
+            $comment->save();
+        }
+        catch (\Exception $e) {
+            http_response_code(400);
+        }
+        return redirect()->route('page.blogfull',['id'=>$blogItem]);
+    }
 }

@@ -44,7 +44,7 @@
                 $commenter = \App\Models\User::find($comment['USER_ID']);
             @endphp
         <section class=blog-comment>
-            <h4><figure class=avatar-box><img alt src="{{asset($commenter['AVATAR']??'images/my-avatar.png')}}"></figure> {{$commenter['FIRST_NAME']}} {{$commenter['LAST_NAME']}} at <time>{{$comment['CREATED_AT']}}</time>
+            <h4><figure class=avatar-box><img alt src="{{asset($commenter['AVATAR']??'images/my-avatar.png')}}"></figure> {{$commenter['FIRST_NAME']}} {{$commenter['LAST_NAME']}} at <time>{{$comment['CREATED_AT']}}</time></h4>
                 @auth
                 @if(Auth::user()->USER_TYPE==0)
                 <form action="{{route('page.blog.comment.delete', ['id' => $comment['COMMENT_ID']])}}" method=post>
@@ -55,8 +55,23 @@
                     </button>
                     </form>
                 @endif
+                @if(Auth::user()->USER_ID=$commenter['USER_ID'])
+                <details>
+                    <summary class="icon-box">
+                        <ion-icon name="pencil-outline" role="img" class="md hydrated" aria-label="Edit"></ion-icon>
+                    </summary>
+                    <form method=post action="{{route('page.blog.comment.update',['id'=>$comment['COMMENT_ID']])}}">
+                        @csrf
+                        @method('patch')
+                        <fieldset>
+                            <legend>Edit your comment&hellip;</legend>
+                            <textarea name=content>{{$comment['CONTENTS']}}</textarea>
+                            <button type=submit>Edit comment</button>
+                        </fieldset>
+                    </form>
+                </details>
+                @endif
                 @endauth
-            </h4>
             <p>{{$comment['CONTENTS']}}
         </section>
         @endforeach
