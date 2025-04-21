@@ -20,10 +20,9 @@
         }
         
         public function edit(Request $request) {
-            //TODO: Figure out how to edit blogs.
             $blogItem = Blog::find($_GET['id']);
             self::blogItemFormRequest($blogItem, $request);
-            return view('pages.blogfull');//TODO: complete this
+            return view('pages.blogfull');
         }
 
         private function blogItemFormRequest(Blog $blogItem, Request $request){
