@@ -10,7 +10,7 @@ class PageController extends Controller
     public function show($name)
     {
         // List of allowed pages (to prevent errors or unwanted access)
-        $pages = ['home', 'bio', 'resume', 'portfolio', 'blog','login' , 'register'];
+        $pages = ['home', 'bio', 'resume', 'portfolio','portfoliofull', 'blog','login' , 'register'];
         $admin_pages = ['admin'];
         $user_pages = ['profile'];
 
