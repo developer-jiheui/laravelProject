@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('content')
     <article class="portfolio active" data-page="portfolio">
-
         <header>
             <h2 class="h2 article-title">Portfolio</h2>
         </header>
@@ -10,17 +9,17 @@
             <ul class="filter-list">
 
                 <li class="filter-item">
-                    <button class="active" data-filter-btn>All</button>
+                    <a href="{{route('page.portfolio')}}" class="{{isset($_GET['cat'])?'':'active'}}">All</a>
                 </li>
                 @foreach (\App\Models\Portfolio::categories() as $category)
                 <li class="filter-item">
-                    <button data-filter-btn>{{$category}}</button>
+                    <a href="{{route('page.portfolio',['cat'=>$category])}}" class="{{($_GET['cat']??'')==$category?'active':''}}">{{$category}}</a>
                 </li>
                 @endforeach
 
             </ul>
 
-            <div class="filter-select-box">
+            <!--<div class="filter-select-box">
 
                 <button class="filter-select" data-select>
 
@@ -35,25 +34,26 @@
                 <ul class="select-list">
 
                     <li class="select-item">
-                        <button data-select-item>All</button>
+                        <a href="{{route('page.portfolio')}}">All</a>
                     </li>
 
                     @foreach (\App\Models\Portfolio::categories() as $category)
                 <li class="select-item">
-                    <button data-select-item>{{$category}}</button>
+                    <a href="{{route('page.portfolio',['cat'=>$category])}}">{{$category}}</a>
                 </li>
                 @endforeach
 
                 </ul>
 
-            </div>
+            </div> this thing needs javascript anyway-->
 
             <!--  TODO MAKE THE PROJECT PART LIKE A BLOG POST-->
 
             <ul class="project-list">
                 @foreach (\App\Models\Portfolio::all()->toArray() as $item)
-                <li class="project-item active" data-filter-item data-category="{{$item['CATEGORY']}}">
-                    <a href=#> <!-- TODO MAKE THE LINK DO SOMETHING -->
+                @if(!isset($_GET['cat'])||$_GET['cat']==$item['CATEGORY'])
+                <li class="project-item">
+                    <a href="{{route('page.portfoliofull',['id'=>$item['PORTFOLIO_ID']])}}">
                          <figure class="project-img">
                             <div class="project-item-icon-box">
                                 <button select-project><ion-icon name="eye-outline"></ion-icon></button>
@@ -66,11 +66,16 @@
 
                         <p class="project-category">{{$item['CATEGORY']}}</p>
                     </a>
-                    {{--@if(Auth::user()->user_type!=0||Auth::user()->id!=$item['USER_ID'])
-                    <button class="icon-box project-interact">
-                        <ion-icon name="thumbs-up-outline" role="img" class="md hydrated" aria-label="Like"></ion-icon>
+                    @auth
+                    @if(Auth::user()->USER_TYPE!=0||Auth::user()->USER_ID!=$item['USER_ID'])
+                    <form action="{{route('page.portfolio.like',['id'=>$item['PORTFOLIO_ID'],'cat'=>$_GET['cat']??null])}}" method=post class=project-interact>
+                        @csrf
+                    <button class="icon-box">
+                        <ion-icon {{\Illuminate\Support\Facades\DB::scalar('SELECT COUNT(*) FROM likes WHERE portfolio_id = ? AND user_id=? LIMIT 1',[$item['PORTFOLIO_ID'],Auth::user()->USER_ID])?'name=thumbs-up aria-label=Liked':'name=thumbs-up-outline aria-label=Like'}} role="img" class="md hydrated"></ion-icon>
+                        {{$item['LIKE_COUNT']>0?$item['LIKE_COUNT']:""}}
                     </button>
-                    @else--}}
+                    </form>
+                    @else
                     <div class=project-interact>
                     <a class="icon-box" href="{{route('edit.portfolio', ['id' => $item['PORTFOLIO_ID']])}}">
                         <ion-icon name="pencil-outline" role="img" class="md hydrated" aria-label="Edit"></ion-icon>
@@ -83,8 +88,10 @@
                     </button>
                     </form>
                     </div>
-                    {{--@endif--}}
-                </li> <!-- TODO likes -->
+                    @endif
+                    @endauth
+                </li>
+                @endif
                 @endforeach
 
 
@@ -93,9 +100,11 @@
         </section>
 
     </article>
-    {{--@if(Auth::user()->user_type==0)--}}
+    @auth
+    @if(Auth::user()->USER_TYPE==0)
     <a href="{{ route('edit.portfolio') }}" class="edit-page-button">
     <ion-icon name="add-outline" role="img" class="md hydrated" aria-label="Add"></ion-icon> New Portfolio Item
     </a>
-    {{--@endif--}}
+    @endif
+    @endauth
 @endsection
