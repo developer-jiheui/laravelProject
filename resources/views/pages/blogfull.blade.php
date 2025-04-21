@@ -44,7 +44,19 @@
                 $commenter = \App\Models\User::find($comment['USER_ID']);
             @endphp
         <section class=blog-comment>
-            <h4><figure class=avatar-box><img alt src="{{asset($commenter['AVATAR']??'images/my-avatar.png')}}"></figure> {{$commenter['FIRST_NAME']}} {{$commenter['LAST_NAME']}} at <time>{{$comment['CREATED_AT']}}</time></h4>
+            <h4><figure class=avatar-box><img alt src="{{asset($commenter['AVATAR']??'images/my-avatar.png')}}"></figure> {{$commenter['FIRST_NAME']}} {{$commenter['LAST_NAME']}} at <time>{{$comment['CREATED_AT']}}</time>
+                @auth
+                @if(Auth::user()->USER_TYPE==0)
+                <form action="{{route('page.blog.comment.delete', ['id' => $comment['COMMENT_ID']])}}" method=post>
+                        @csrf
+                        @method('delete')
+                    <button class="icon-box">
+                        <ion-icon name="trash-outline" role="img" class="md hydrated" aria-label="Delete"></ion-icon>
+                    </button>
+                    </form>
+                @endif
+                @endauth
+            </h4>
             <p>{{$comment['CONTENTS']}}
         </section>
         @endforeach

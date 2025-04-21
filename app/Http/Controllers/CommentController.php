@@ -20,11 +20,13 @@ class commentController extends Controller {
 
     public function delete() {
         try {
-            \App\Models\Comment::destroy($_GET['id']);
+            $comment = \App\Models\Comment::find($_GET['id']);
+            $blogItem = $comment['BLOG_ID'];
+            $comment->delete();
         }
         catch (\Exception $e) {
             http_response_code(400);
         }
-        return view('pages.blogfull');
+        return redirect()->route('page.blogfull',['id'=>$blogItem]);
     }
 }
