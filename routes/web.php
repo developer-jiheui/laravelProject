@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\UserController;
-
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +40,9 @@ Route::middleware('auth')->get('/edit/home', function () {
 Route::middleware('auth')->get('/edit/bio', function () {
     return view('edit.bio');
 })->name('edit.bio');
-Route::middleware('auth')->get('/edit/blog', function () {
+/* Route::middleware('auth')->get('/edit/blog', function () {
     return view('edit.blog');
-})->name('edit.blog');
+})->name('edit.blog'); */
 
 
 //VIATRIX ---------------
@@ -62,3 +62,8 @@ Route::get('/edit/blog', function () {
 Route::delete('/edit/blog/delete','App\Http\Controllers\BlogController@delete')->name('edit.blog.delete');
 Route::patch('/edit/blog/update','App\Http\Controllers\BlogController@edit')->name('edit.blog.update');
 Route::post('/edit/blog/create','App\Http\Controllers\BlogController@create')->name('edit.blog.create');
+
+//route to set up blogfull
+Route::get('/page/blogfull', function () {
+    return view('page.blogfull');
+})->name('page.blogfull');
