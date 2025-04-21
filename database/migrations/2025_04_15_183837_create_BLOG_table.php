@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('TITLE', 1000);
             $table->text('CONTENTS')->nullable();
             $table->integer('USER_ID')->index('FK_BLOG_USER');
-            $table->timestamp('CREATE_DT')->nullable();
-            $table->timestamp('MODIFY_DT')->nullable();
+            $table->timestamp('CREATED_AT')->nullable();//created_dt
+            $table->timestamp('UPDATED_AT')->nullable();// was MODIFY_DT
             $table->string('IMAGE_URL', 100)->nullable();
         });
     }
