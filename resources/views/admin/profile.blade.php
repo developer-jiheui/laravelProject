@@ -23,7 +23,7 @@
 
         <div class="separator"></div>
 
-        <form method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data" class="form register-form">
+        <form method="POST" action="{{ route('admin.update') }}" enctype="multipart/form-data" class="form register-form">
             @csrf
 
             <div class="input-wrapper">
@@ -70,7 +70,7 @@
                             placeholder="{{ in_array($field, ['password', 'password_confirmation']) ? $label : '' }}"
                     >
                     @error($field)
-                    <p class="form-error">{{ $message }}</p>
+                    <div></div><small class="text-danger" style="color:red">{{ $message }}</small>
                     @enderror
                 </div>
 

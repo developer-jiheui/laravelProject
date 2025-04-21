@@ -44,20 +44,17 @@
             </div>
 
             @foreach ([
-                'first_name' => 'First Name',
-                'last_name' => 'Last Name',
-                'email' => 'Email',
-                'password' => 'Password',
-                'password_confirmation' => 'Confirm Password',
-                'address' => 'Address',
-                'phone_num' => 'Phone Number',
-                'bio' => 'Bio',
-                'job_title' => 'Job Title',
-                'birthday' => 'Birthday',
-                'github' => 'GitHub',
-                'linked_in' => 'LinkedIn',
-                'instagram' => 'Instagram',
-            ] as $field => $label)
+                      'first_name' => 'First Name',
+                      'last_name' => 'Last Name',
+                      'email' => 'Email',
+                      'password' => 'Password',
+                      'password_confirmation' => 'Confirm Password',
+                      'address' => 'Address',
+                      'phone_num' => 'Phone Number',
+                      'bio' => 'Bio',
+                      'job_title' => 'Job Title',
+                      'birthday' => 'Birthday',
+                  ] as $field => $label)
 
                 <div class="input-wrapper">
                     <label for="{{ $field }}" class="form-label h5">{{ $label }}</label>
@@ -70,7 +67,7 @@
                         placeholder="{{ in_array($field, ['password', 'password_confirmation']) ? $label : '' }}"
                     >
                     @error($field)
-                    <p class="form-error">{{ $message }}</p>
+                    <div></div><small class="text-danger" style="color:red">{{ $message }}</small>
                     @enderror
                 </div>
 
@@ -84,7 +81,7 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <div class="input-wrapper" style="display: flex; justify-content: center; margin-top: 1.5rem;">
-            <button type="submit" class="form-btn login-highlight">Log Out</button>
+                <button type="submit" class="form-btn login-highlight">Log Out</button>
             </div>
         </form>
 
