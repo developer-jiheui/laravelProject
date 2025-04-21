@@ -89,16 +89,20 @@
                         emailContent: emailContent.value
                     })
                 })
-                    .then(res => {
-                        if (!res.ok) throw new Error("Request failed");
-                        return res.json();
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.details || "Unknown error");
+                            });
+                        }
+                        return response.json();
                     })
                     .then(data => {
                         alert(data.message);
                     })
-                    .catch(err => {
-                        console.error(err);
-                        alert("❌ Failed to send email.");
+                    .catch(error => {
+                        console.error("❌ Error:", error.message);
+                        alert("❌ Failed to send email: " + error.message);
                     });
             });
         });

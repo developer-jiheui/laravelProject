@@ -23,19 +23,31 @@ use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMessage;
 
+
 Route::post('/send-email', function (\Illuminate\Http\Request $request) {
-    $data = $request->validate([
-        'senderName' => 'required|string',
-        'senderEmail' => 'required|email',
-        'emailContent' => 'required|string',
-    ]);
+    try {
+        $data = $request->validate([
+            'senderName' => 'required|string',
+            'senderEmail' => 'required|email',
+            'emailContent' => 'required|string',
+        ]);
 
-    Mail::to('developer.jiheuilee@gmail.com')->send(new ContactMessage($data));
+        Log::info("📩 Sending email to admin@example.com", $data);
 
-    return response()->json([
-        'message' => 'Email sent to admin!',
-        'senderEmail' => $data['senderEmail']
-    ]);
+        Mail::to('admin@example.com')->send(new ContactMessage($data));
+
+        return response()->json([
+            'message' => '✅ Email sent successfully!',
+        ]);
+    } catch (\Throwable $e) {
+        Log::error("❌ Email failed", [
+            'error' => $e->getMessage(),
+        ]);
+        return response()->json([
+            'error' => 'Failed to send email.',
+            'details' => $e->getMessage()
+        ], 500);
+    }
 });
 //PAGES
 Route::get('/', [PageController::class, 'show'])->defaults('name', 'home')->name('home');

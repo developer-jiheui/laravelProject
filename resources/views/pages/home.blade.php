@@ -268,12 +268,4 @@
         </section>
 
     </article>
-    {{--    @auth--}}
-    {{--        <a href="{{ route('edit.home') }}" class="edit-page-button">--}}
-    {{--            ✏️ Edit Home--}}
-    {{--        </a>--}}
-    {{--    @endauth--}}
-    <a href="{{ route('edit.home') }}" class="edit-page-button">
-        ✏️ Edit Home
-    </a>
 @endsection

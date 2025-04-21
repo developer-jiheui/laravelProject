@@ -19,14 +19,14 @@ class ContactMessage extends Mailable
         $this->data = $data;
     }
 
-    public function envelope()
+    public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Message from ' . $this->data['senderName'],
+            subject: 'Contact Message from ' . $this->data['senderName']
         );
     }
 
-    public function content()
+    public function content(): Content
     {
         return new Content(
             view: 'emails.contact',
@@ -34,7 +34,7 @@ class ContactMessage extends Mailable
         );
     }
 
-    public function attachments()
+    public function attachments(): array
     {
         return [];
     }
