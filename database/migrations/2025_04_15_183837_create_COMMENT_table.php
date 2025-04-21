@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('COMMENT', function (Blueprint $table) {
             $table->integer('COMMENT_ID', true);
             $table->string('CONTENTS', 4000);
-            $table->timestamp('CREATE_DT')->nullable();
+            $table->timestamp('CREATED_AT')->nullable();
+            $table->timestamp('UPDATED_AT')->nullable();
             $table->integer('STATE')->nullable();
             $table->integer('DEPTH')->nullable();
             $table->integer('GROUP_NO')->nullable();

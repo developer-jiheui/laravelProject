@@ -2,7 +2,13 @@
 @section('content')
     <article class="portfolio-full active" data-page="portfolio">
         @php
-            $item = \App\Models\Portfolio::find($_GET['id']); // TODO return a 404 if it's not found
+            try {
+                $item = \App\Models\Portfolio::find($_GET['id']);
+            }
+            catch (Exception $e) {
+                http_response_code(404); // doesn't return a page but whatever good enough
+                die();
+            }
         @endphp
 
         <header>  

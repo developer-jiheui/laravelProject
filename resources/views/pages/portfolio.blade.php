@@ -19,36 +19,6 @@
 
             </ul>
 
-            <!--<div class="filter-select-box">
-
-                <button class="filter-select" data-select>
-
-                    <div class="select-value" data-select-value>Select category</div>
-
-                    <div class="select-icon">
-                        <ion-icon name="chevron-down"></ion-icon>
-                    </div>
-
-                </button>
-
-                <ul class="select-list">
-
-                    <li class="select-item">
-                        <a href="{{route('page.portfolio')}}">All</a>
-                    </li>
-
-                    @foreach (\App\Models\Portfolio::categories() as $category)
-                <li class="select-item">
-                    <a href="{{route('page.portfolio',['cat'=>$category])}}">{{$category}}</a>
-                </li>
-                @endforeach
-
-                </ul>
-
-            </div> this thing needs javascript anyway-->
-
-            <!--  TODO MAKE THE PROJECT PART LIKE A BLOG POST-->
-
             <ul class="project-list">
                 @foreach (\App\Models\Portfolio::all()->toArray() as $item)
                 @if(!isset($_GET['cat'])||$_GET['cat']==$item['CATEGORY'])
