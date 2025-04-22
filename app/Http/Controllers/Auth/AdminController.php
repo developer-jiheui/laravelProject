@@ -11,11 +11,14 @@ use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
 {
+
+
     /**
      * Show all users to the admin.
      */
     public function index()
     {
+        $superAdmin = User::find(1);
         $user = Auth::user();
 
         // If user not logged in or user is not admin
@@ -25,7 +28,7 @@ class AdminController extends Controller
         }
 
         $users = User::all();
-        return view('pages.admin', compact('users'));
+        return view('pages.admin', compact('users','superAdmin'));
     }
 
     /**

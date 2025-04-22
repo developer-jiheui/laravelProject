@@ -36,7 +36,7 @@
                     </label>
                 </div>
                 @error('profile_photo')
-                <p class="form-error">{{ $message }}</p>
+                <div></div><small class="text-danger" style="color:red">{{ $message }}</small>
                 @enderror
                 <div id="image-preview" style="margin-top: 0; display: none; text-align: center;">
                     <img src="#" id="preview-img" alt="Image Preview" class="avatar-preview" />
