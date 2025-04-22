@@ -29,7 +29,7 @@
                                 <button select-project><ion-icon name="eye-outline"></ion-icon></button>
                             </div>
 
-                            <img src="{{asset($item['IMAGE_URL'])}}" alt loading="lazy">
+                            <img src="{{asset($item['IMAGE_URL']?? 'images/default-blog.jpeg')}}" alt loading="lazy">
                         </figure>
 
                         <h3 class="project-title">{{$item['TITLE']}}</h3>
