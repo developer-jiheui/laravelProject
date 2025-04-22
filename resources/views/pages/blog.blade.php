@@ -54,18 +54,13 @@
         </section>
 
     </article>
-    {{--    @auth--}}
-    {{--        <a href="{{ route('edit.home') }}" class="edit-page-button">--}}
-    {{--            ✏️ Edit Home--}}
-    {{--        </a>--}}
-    {{--    @endauth--}}
-    {{--@if(Auth::user()->user_type==0)--}}
-    <a href="{{ route('edit.blog') }}" class="edit-page-button">
-    <ion-icon name="add-outline" role="img" class="md hydrated" aria-label="Add"></ion-icon> New Blog Item
-    </a>
-    {{--@endif--}}
-    <!-- <a href="{{ route('edit.blog') }}" class="edit-page-button">
-        ✏️ Edit blog
-    </a> -->
+    @Auth
+        {{-- If statement to check if user is admin. --}}
+        @if(Auth::check() && Auth::user()->USER_TYPE == 0)
+            <a href="{{ route('edit.blog') }}" class="edit-page-button">
+                <ion-icon name="add-outline" role="img" class="md hydrated" aria-label="Add"></ion-icon> 
+                New Blog Item
+            </a>
+        @endif
+    @endAuth
 @endsection
-
