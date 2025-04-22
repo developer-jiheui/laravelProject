@@ -23,7 +23,7 @@
 
         <div class="separator"></div>
 
-        <form method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data" class="form register-form">
+        <form method="POST" action="{{ route('admin.update') }}" enctype="multipart/form-data" class="form register-form">
             @csrf
 
             <div class="input-wrapper">
@@ -61,17 +61,32 @@
 
                 <div class="input-wrapper">
                     <label for="{{ $field }}" class="form-label h5">{{ $label }}</label>
-                    <input
-                            type="{{ in_array($field, ['email']) ? 'email' : ($field === 'password' || $field === 'password_confirmation' ? 'password' : ($field === 'birthday' ? 'date' : 'text')) }}"
-                            id="{{ $field }}"
-                            name="{{ $field }}"
-                            class="form-input"
-                            value="{{ in_array($field, ['password', 'password_confirmation']) ? '' : old($field, Auth::user()[strtoupper($field)]) }}"
-                            placeholder="{{ in_array($field, ['password', 'password_confirmation']) ? $label : '' }}"
-                    >
-                    @error($field)
-                    <p class="form-error">{{ $message }}</p>
-                    @enderror
+                    @if ($field === 'address')
+                            <input
+                                    type="text"
+                                    id="autocomplete"
+                                    name="address"
+                                    class="form-input"
+                                    value="{{ old('address', Auth::user()->ADDRESS) }}"
+                                    placeholder="Address"
+                                    autocomplete="off"
+                            >
+                            @error('address')
+                            <div></div><small class="text-danger" style="color:red">{{ $message }}</small>
+                            @enderror
+                    @else
+                            <input
+                                    type="{{ in_array($field, ['email']) ? 'email' : ($field === 'password' || $field === 'password_confirmation' ? 'password' : ($field === 'birthday' ? 'date' : 'text')) }}"
+                                    id="{{ $field }}"
+                                    name="{{ $field }}"
+                                    class="form-input"
+                                    value="{{ in_array($field, ['password', 'password_confirmation']) ? '' : old($field, Auth::user()[strtoupper($field)]) }}"
+                                    placeholder="{{ in_array($field, ['password', 'password_confirmation']) ? $label : '' }}"
+                            >
+                            @error($field)
+                            <div></div><small class="text-danger" style="color:red">{{ $message }}</small>
+                            @enderror
+                    @endif
                 </div>
 
             @endforeach

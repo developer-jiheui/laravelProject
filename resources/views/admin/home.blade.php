@@ -18,8 +18,8 @@
     -->
 
     <div class="main-content">
-        @include('admin.navbar')
-        @yield('adnavbar')
+        @include('navbar')
+        @yield('navbar')
 
 
         <!--

@@ -19,6 +19,34 @@ use App\Http\Controllers\CommentController;
 */
 
 //-------JIHEUI
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessage;
+
+
+Route::post('/send-email', function (\Illuminate\Http\Request $request) {
+    try {
+        $data = $request->validate([
+            'senderName' => 'required|string',
+            'senderEmail' => 'required|email',
+            'emailContent' => 'required|string',
+        ]);
+
+        Log::info("sending email to admin", $data);
+        Mail::to('developer.jiheuilee@gmail.com')->send(new ContactMessage($data));
+        return response()->json([
+            'message' => '✅ Email sent successfully!',
+        ]);
+    } catch (\Throwable $e) {
+        Log::error("❌ Email failed", [
+            'error' => $e->getMessage(),
+        ]);
+        return response()->json([
+            'error' => 'Failed to send email.',
+            'details' => $e->getMessage()
+        ], 500);
+    }
+});
 //PAGES
 Route::get('/', [PageController::class, 'show'])->defaults('name', 'home')->name('home');
 Route::get('/page/{name}', [PageController::class, 'show'])->name('page.show');
@@ -40,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.home');
 });
 Route::get('/admin/profile', function () {return view('admin.profile');})->middleware('auth')->name('admin.profile');
-
+Route::post('/admin/update', [AdminController::class, 'update'])->middleware('auth')->name('admin.update');
 Route::get('/admin-debug', function () {
     $users = \App\Models\User::all();
     return view('pages.admin', compact('users'));

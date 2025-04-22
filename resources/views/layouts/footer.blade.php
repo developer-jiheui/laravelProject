@@ -1,6 +1,7 @@
 <!--
   - custom js link
 -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJBgLFtPeoudAH2Wkaqn6lkQbY8TwZqxU&libraries=places"></script>
 
 <script src="{{ asset('js/script.js') }}"></script>
 
