@@ -47,7 +47,7 @@
                 @elseif(Auth::user()->USER_TYPE == 0)
                     <li class="navbar-item">
                         <a href="{{ route('admin.profile') }}"
-                           class="navbar-link login-highlight {{ request()->routeIs('admin.profile') ? 'active' : '' }}"
+                           class="navbar-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}"
                            data-nav-link>
                             Profile
                         </a>
