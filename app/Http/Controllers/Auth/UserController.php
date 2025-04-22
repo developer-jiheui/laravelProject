@@ -41,79 +41,63 @@ class UserController extends Controller
             ->with('success', 'Registration successful. Please log in.');
     }
 
+
     public function update(Request $request)
     {
         $user = Auth::user();
 
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name'  => 'required|string|max:255',
-            'email'      => 'required|email|unique:USER,EMAIL,' . $user->USER_ID . ',USER_ID',
-            'password'   => 'nullable|confirmed|min:6',
-            'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            // add other fields validations here...
+        $validated = $request->validate([
+            'first_name'     => 'required|string|max:255',
+            'last_name'      => 'required|string|max:255',
+            'email'          => 'required|email|unique:USER,EMAIL,' . $user->USER_ID . ',USER_ID',
+            'password'       => 'nullable|confirmed|min:6',
+            'profile_photo'  => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'address'        => 'nullable|string|max:255',
+            'phone_num'      => 'nullable|string|max:255',
+            'bio'            => 'nullable|string|max:255',
+            'job_title'      => 'nullable|string|max:255',
+            'birthday'       => 'nullable|date',
+            'github'         => 'nullable|string|max:255',
+            'linked_in'      => 'nullable|string|max:255',
+            'instagram'      => 'nullable|string|max:255',
         ]);
 
-        // Upload avatar if present
+        // Handle profile photo upload
         if ($request->hasFile('profile_photo')) {
             $file = $request->file('profile_photo');
             $filename = uniqid('avatar_', true) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/avatars'), $filename); // Move directly to public/images/avatars
-
-            $user->AVATAR = 'images/avatars/' . $filename; // Save the path to use in <img src="{{ asset(...) }}">
+            $file->move(public_path('images/avatars'), $filename);
+            $user->AVATAR = 'images/avatars/' . $filename;
         }
 
-        if ($request->filled('first_name')) {
-            $user->FIRST_NAME = $request->first_name;
+        // Assign validated fields (except password and profile_photo)
+        $fieldMap = [
+            'first_name' => 'FIRST_NAME',
+            'last_name'  => 'LAST_NAME',
+            'email'      => 'EMAIL',
+            'address'    => 'ADDRESS',
+            'phone_num'  => 'PHONE_NUM',
+            'bio'        => 'BIO',
+            'job_title'  => 'JOB_TITLE',
+            'birthday'   => 'BIRTHDAY',
+            'github'     => 'GITHUB_URL',
+            'linked_in'  => 'LINKEDIN_URL',
+            'instagram'  => 'INSTAGRAM_URL',
+        ];
+
+        foreach ($fieldMap as $requestField => $dbField) {
+            if (isset($validated[$requestField])) {
+                $user->{$dbField} = $validated[$requestField];
+            }
         }
 
-        if ($request->filled('last_name')) {
-            $user->LAST_NAME = $request->last_name;
-        }
-
-        if ($request->filled('email')) {
-            $user->EMAIL = $request->email;
-        }
-
-        if ($request->filled('address')) {
-            $user->ADDRESS = $request->address;
-        }
-
-        if ($request->filled('phone_num')) {
-            $user->PHONE_NUM = $request->phone_num;
-        }
-
-        if ($request->filled('bio')) {
-            $user->BIO = $request->bio;
-        }
-
-        if ($request->filled('job_title')) {
-            $user->JOB_TITLE = $request->job_title;
-        }
-
-        if ($request->filled('birthday')) {
-            $user->BIRTHDAY = $request->birthday;
-        }
-
-        if ($request->filled('github')) {
-            $user->GITHUB_URL = $request->github;
-        }
-
-        if ($request->filled('linked_in')) {
-            $user->LINKEDIN_URL = $request->linked_in;
-        }
-
-        if ($request->filled('instagram')) {
-            $user->INSTAGRAM_URL = $request->instagram;
-        }
-
-        if ($request->filled('password')) {
-            $user->PW = bcrypt($request->password);
+        // Handle password separately
+        if (!empty($validated['password'])) {
+            $user->PW = bcrypt($validated['password']);
         }
 
         $user->save();
 
         return redirect()->back()->with('success', 'Profile updated!');
     }
-
 }
