@@ -68,7 +68,7 @@
                         canvas.height = img.height * scaleFactor;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        callback(canvas.toDataURL('image/jpeg', 0.7));
+                        callback(canvas.toDataURL('image/jpeg', 0.3));
                     };
                     img.src = e.target.result;
                 };
