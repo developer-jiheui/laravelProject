@@ -60,6 +60,12 @@
                     </div>
                     @endif
                     @endauth
+                    @guest
+                    <span class="icon-box project-interact">
+                    <ion-icon name=thumbs-up-outline aria-label=Likes role="img" class="md hydrated"></ion-icon>
+                        {{$item['LIKE_COUNT']>0?$item['LIKE_COUNT']:""}}
+</span>
+                    @endguest
                 </li>
                 @endif
                 @endforeach
