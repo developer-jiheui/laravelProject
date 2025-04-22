@@ -46,12 +46,10 @@
             @foreach ([
                       'first_name' => 'First Name',
                       'last_name' => 'Last Name',
-                      'email' => 'Email',
                       'password' => 'Password',
                       'password_confirmation' => 'Confirm Password',
                       'address' => 'Address',
                       'phone_num' => 'Phone Number',
-                      'bio' => 'Bio',
                       'job_title' => 'Job Title',
                       'birthday' => 'Birthday',
                   ] as $field => $label)
