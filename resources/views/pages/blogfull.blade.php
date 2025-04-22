@@ -11,7 +11,7 @@
             }
         @endphp
 
-        <header>  
+        <header>
         <h2 class="h2 article-title">{{$blogItem['TITLE']}}</h2>
     <p class=filter-item>
     @auth
@@ -29,10 +29,9 @@
                     </form>
     </div>
             @endif
-        @endauth  
+        @endauth
     </header>
-        <img class=project-full-img alt src="{{asset($blogItem['IMAGE_URL'])}}"><!-- asset gets you the full url from partial url -->
-        <p class=project-description>{{$blogItem['CONTENTS']}}</p>
+        <div class="project-description">{!! $blogItem['CONTENTS'] !!}</div>
         <h3>Comments</h3> {{-- semantically this should be an H2 and the page should start with an H1. --}}
         @auth
         <form method=post action="{{route('page.blog.comment')}}">
@@ -45,7 +44,7 @@
             </fieldset>
         </form>
         @endauth
-        @php
+    @php
             $comments = \App\Models\Comment::where('BLOG_ID','=',$_GET['id'])->get()->toArray();
         @endphp
         @if (empty($comments))

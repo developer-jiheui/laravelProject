@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('BLOG', function (Blueprint $table) {
             $table->integer('BLOG_ID', true);
             $table->string('TITLE', 1000);
-            $table->text('CONTENTS')->nullable();
+            $table->longText('CONTENTS');
             $table->integer('USER_ID')->index('FK_BLOG_USER');
-            $table->timestamp('CREATED_AT')->nullable();//created_dt
-            $table->timestamp('UPDATED_AT')->nullable();// was MODIFY_DT
-            $table->string('IMAGE_URL', 100)->nullable();
+            $table->timestamp('CREATED_AT')->nullable();
+            $table->timestamp('UPDATED_AT')->nullable();
+            $table->longText('IMAGE_URL')->nullable(); // if storing base64
         });
     }
 
