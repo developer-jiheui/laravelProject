@@ -25,7 +25,7 @@
                                 style="border:0"
                                 referrerpolicy="no-referrer-when-downgrade"
                                 loading="lazy"
-                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAJBgLFtPeoudAH2Wkaqn6lkQbY8TwZqxU&q&q=Vancouver,+BC,+Canada">
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAJBgLFtPeoudAH2Wkaqn6lkQbY8TwZqxU&q=Vancouver,+BC,+Canada">
                             </iframe>
                         @endif
                     </figure>
