@@ -67,8 +67,9 @@ Route::middleware('auth')->post('/update/profile', [UserController::class, 'upda
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.home');
 });
-Route::get('/admin/profile', function () {return view('admin.profile');})->middleware('auth')->name('admin.profile');
-Route::post('/admin/update', [AdminController::class, 'update'])->middleware('auth')->name('admin.update');
+Route::get('/admin/profile', [AdminController::class, 'profile'])
+    ->middleware('auth')
+    ->name('admin.profile');Route::post('/admin/update', [AdminController::class, 'update'])->middleware('auth')->name('admin.update');
 Route::get('/admin-debug', function () {
     $users = \App\Models\User::all();
     return view('pages.admin', compact('users'));

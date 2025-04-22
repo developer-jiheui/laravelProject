@@ -31,7 +31,15 @@ class AdminController extends Controller
         return view('pages.admin', compact('users','superAdmin'));
     }
 
-    /**
+    /*
+     * admin profile
+     * */
+    public function profile()
+    {
+        $superAdmin = User::find(1); // the first user : super admin
+        return view('admin.profile', compact('superAdmin'));
+    }
+    /*
     * Update Admin
      */
     public function update(Request $request)
