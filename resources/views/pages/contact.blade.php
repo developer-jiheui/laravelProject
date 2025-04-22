@@ -16,7 +16,7 @@
                                 style="border:0"
                                 referrerpolicy="no-referrer-when-downgrade"
                                 loading="lazy"
-                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDelbaq_XlOkSWQDKyZKwXkJx1SFPbHH2Q&q={{ urlencode($superAdmin->ADDRESS) }}">
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAJBgLFtPeoudAH2Wkaqn6lkQbY8TwZqxU&q={{ urlencode($superAdmin->ADDRESS) }}">
                             </iframe>
                         @else
                             <iframe
