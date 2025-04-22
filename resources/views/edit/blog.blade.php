@@ -36,7 +36,7 @@
 
             <div class="input-wrapper">
                 <label for="title" class="form-label">Title</label>
-                <input name="title" id="title" class="form-input" value="{{ $blogItem['TITLE'] ?? '' }}">
+                <input name="title" id="title" class="form-input" value="{{ $blogItem['TITLE'] ?? '' }}" required>
             </div>
 
             <!-- Hidden input to hold HTML content -->

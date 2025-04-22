@@ -31,12 +31,12 @@
 
                 <div class="input-wrapper">
                     <label for="password" class="form-label h5">Password</label>
-                    <input type="password" id="password" name="password" class="form-input" required placeholder="Password">
+                    <input type="password" id="password" name="password" class="form-input" required placeholder="Password" pattern=".{6,}">
                 </div>
 
                 <div class="input-wrapper">
                     <label for="password_confirmation" class="form-label h5">Confirm Password</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" required placeholder="Confirm password">
+                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" required placeholder="Confirm password" pattern=".{6,}">
                 </div>
 
                 <div class="input-wrapper" style="margin-top: 1.5rem;">
