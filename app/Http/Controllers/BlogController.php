@@ -17,24 +17,13 @@
             ]);
 
             $blogItem = new Blog;
-            $blogItem->USER_ID  = Auth::user()->USER_ID;
-            $blogItem->TITLE    = $request->input('title');
-            $blogItem->CONTENTS = $request->input('content');
-
-            //  Extract the first image from content
-            $firstImage = self::extractFirstImageSrc($request->input('content'));
-            if ($firstImage !== null) {
-                $blogItem->IMAGE_URL = $firstImage;
-            }
-
-            $blogItem->save();
+            self::blogItemFormRequest($blogItem, $request);
 
             return view('pages.blog');
         }
 
         public function edit(Request $request) {
             $blogItem = Blog::find($_GET['id']);
-            $blogItem->IMAGE_URL = self::extractFirstImageSrc($request->$_POST['content']);
             self::blogItemFormRequest($blogItem, $request);
             return view('pages.blogfull');
         }
@@ -50,11 +39,16 @@
         }
 
         private function blogItemFormRequest(Blog $blogItem, Request $request){
-            $blogItem->USER_ID = Auth::user()->USER_ID;
-            $blogItem->TITLE = $_POST['title'];
-            $blogItem->CONTENTS = $_POST['content'];
-            if ($request->file('img')!==null)
-                $blogItem->IMAGE_URL = '/storage/' .$request->file('img')->store('portfolioImgs','public');
+            $blogItem->USER_ID  = Auth::user()->USER_ID;
+            $blogItem->TITLE    = $request->input('title');
+            $blogItem->CONTENTS = $request->input('content');
+
+            //  Extract the first image from content
+            $firstImage = self::extractFirstImageSrc($request->input('content'));
+            if ($firstImage !== null) {
+                $blogItem->IMAGE_URL = $firstImage;
+            }
+
             $blogItem->save();
         }
 

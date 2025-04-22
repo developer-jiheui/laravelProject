@@ -24,7 +24,7 @@
         </header>
 
         <form class="form"
-              action="{{ $isEdit ? route('edit.blog.update', ['id' => $blogItem->BLOG_NO]) : route('edit.blog.create') }}"
+              action="{{ $isEdit ? route('edit.blog.update', ['id' => $blogItem->BLOG_ID]) : route('edit.blog.create') }}"
               method="post"
               enctype="multipart/form-data">
             @csrf
