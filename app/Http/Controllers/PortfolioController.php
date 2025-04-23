@@ -23,7 +23,6 @@ class PortfolioController extends Controller {
         return view('pages.portfoliofull');
     }
     public function create(Request $request) {
-
         $portfolioItem = new Portfolio;
         $portfolioItem->LIKE_COUNT=0;
         self::portfolioItemFromRequest($portfolioItem, $request);

@@ -13,22 +13,6 @@
             </li>
 
             <li class="navbar-item">
-                <a href="{{ route('page.show', ['name' => 'bio']) }}"
-                   class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'bio' ? 'active' : '' }}"
-                   data-nav-link>
-                    Bio
-                </a>
-            </li>
-
-            <li class="navbar-item">
-                <a href="{{ route('page.show', ['name' => 'resume']) }}"
-                   class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'resume' ? 'active' : '' }}"
-                   data-nav-link>
-                    Resume
-                </a>
-            </li>
-
-            <li class="navbar-item">
                 <a href="{{ route('page.show', ['name' => 'portfolio']) }}"
                    class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'portfolio' ? 'active' : '' }}"
                    data-nav-link>
@@ -44,13 +28,54 @@
                 </a>
             </li>
 
-            <li class="navbar-item">
-                <a href="{{ route('page.show', ['name' => 'login']) }}"
-                   class="navbar-link login-highlight {{ request()->routeIs('page.show') && request()->route('name') === 'login' ? 'active' : '' }}"
-                   data-nav-link>
-                    Log in
-                </a>
-            </li>
+            @auth
+                @if (Auth::user()->USER_TYPE == 1)
+                    <li class="navbar-item">
+                        <a href="{{ route('page.show', ['name' => 'contact']) }}"
+                           class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'contact' ? 'active' : '' }}"
+                           data-nav-link>
+                            Contact
+                        </a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ route('page.show', ['name' => 'profile']) }}"
+                           class="navbar-link login-highlight {{ request()->routeIs('page.show') && request()->route('name') === 'profile' ? 'active' : '' }}"
+                           data-nav-link>
+                            Profile
+                        </a>
+                    </li>
+                @elseif(Auth::user()->USER_TYPE == 0)
+                    <li class="navbar-item">
+                        <a href="{{ route('admin.profile') }}"
+                           class="navbar-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}"
+                           data-nav-link>
+                            Profile
+                        </a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="{{ route('admin.home') }}"
+                           class="navbar-link login-highlight {{ request()->routeIs('admin.home') ? 'active' : '' }}"
+                           data-nav-link>
+                            Admin
+                        </a>
+                    </li>
+                @endif
+            @else
+                <li class="navbar-item">
+                    <a href="{{ route('page.show', ['name' => 'contact']) }}"
+                       class="navbar-link {{ request()->routeIs('page.show') && request()->route('name') === 'contact' ? 'active' : '' }}"
+                       data-nav-link>
+                        Contact
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="{{ route('page.show', ['name' => 'login']) }}"
+                       class="navbar-link login-highlight {{ request()->routeIs('page.show') && request()->route('name') === 'login' ? 'active' : '' }}"
+                       data-nav-link>
+                        Log in
+                    </a>
+                </li>
+            @endauth
 
         </ul>
     </nav>

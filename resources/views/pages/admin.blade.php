@@ -12,7 +12,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                {{--                <th>Comment</th>--}}
+                {{-- <th>Comment</th> --}}
                 <th>User Type</th>
                 <th>Action</th>
                 <th>Delete</th>
@@ -20,45 +20,49 @@
             </thead>
             <tbody>
             @foreach($users as $user)
-                <tr>
-                    <td>{{ $user->USER_ID }}</td>
-                    <td>{{ $user->FIRST_NAME }} {{ $user->LAST_NAME }}</td>
-                    <td>{{ $user->EMAIL }}</td>
-                    {{--                    <td>{{ $user->BIO ?? 'N/A' }}</td>--}}
-                    <td>{{ $user->USER_TYPE === 0 ? 'Admin' : 'User' }}</td>
+                @if($user->USER_ID != 1)
+                    <tr>
+                        <td>{{ $user->USER_ID }}</td>
+                        <td>{{ $user->FIRST_NAME }} {{ $user->LAST_NAME }}</td>
+                        <td>{{ $user->EMAIL }}</td>
+                        {{-- <td>{{ $user->BIO ?? 'N/A' }}</td> --}}
+                        <td>{{ $user->USER_TYPE === 0 ? 'Admin' : 'User' }}</td>
 
-                    <td>
-                        {{-- Promote to Admin --}}
-                        @if($user->USER_TYPE !== 0)
-                            <form method="POST" action="{{ route('admin.promote', $user->USER_ID) }}">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-success">Make Admin</button>
-                            </form>
-                        @else
-                            {{-- Demote to User --}}
+                        <td>
+                            {{-- Promote / Demote --}}
+                            @if($user->USER_TYPE !== 0)
+                                <form method="POST" action="{{ route('admin.promote', $user->USER_ID) }}" onsubmit="return confirm('Are you sure you want to promote this user?');">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-success">Make Admin</button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('admin.demote', $user->USER_ID) }}" onsubmit="return confirm('Are you sure you want to demote this user?');">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-warning">Make User</button>
+                                </form>
+                            @endif
+                        </td>
 
-                            <form method="POST" action="{{ route('admin.demote', $user->USER_ID) }}">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-warning">Make User</button>
-                            </form>
-                        @endif
-                    </td>
-
-
-
-                    {{-- Delete --}}
-                    <td>
-                        @if($user->USER_ID !== auth()->id())
-                            <form method="POST" action="{{ route('admin.delete', $user->USER_ID) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
-                        @endif
-                    </td>
-                </tr>
+                        <td>
+                            @if($user->USER_ID !== auth()->id())
+                                <form method="POST" action="{{ route('admin.delete', $user->USER_ID) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            @endif
+                        </td>
+                    </tr>
+                @endif
             @endforeach
             </tbody>
         </table>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <div style="display: flex; justify-content: center; margin-top: 2rem;">
+                <button type="submit" class="form-btn login-highlight">Log Out</button>
+            </div>
+        </form>
     </article>
 @endsection

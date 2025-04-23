@@ -1200,8 +1200,17 @@
   }
 
 
+.blog-full, .blog-full textarea, .blog-full button {color: #fff;}
 
+.blog-comment h4 * {display:inline;}
+.blog-comment p {white-space: pre-wrap;}
 
+/* overriding quill styles */
+.ql-snow .ql-stroke.ql-stroke {stroke:#eee; }
+.ql-snow .ql-fill.ql-fill {fill:#eee;}
+.ql-snow .ql-picker-label.ql-picker-label::before, .ql-snow .ql-blank.ql-blank::before {color:#eee;}
+.ql-toolbar {border-radius: 30px 30px 0 0;}
+.ql-container {border-radius: 0 0 30px 30px;}
 
   /*-----------------------------------*\
     #CONTACT
@@ -1687,7 +1696,7 @@
      */
 
     .article-title { padding-bottom: 20px; }
-    
+
 
 
     /* portfolio and blog grid */
@@ -2064,4 +2073,19 @@
 
 .admin-table .btn-danger:hover {
     background-color: #dc2626;
+}
+.avatar-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 30px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* optional */
+}
+
+.avatar-box img{
+    width: 120px;
+    height: 120px;
+    border-radius: 30px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* optional */
 }

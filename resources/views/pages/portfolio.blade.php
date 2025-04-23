@@ -19,36 +19,6 @@
 
             </ul>
 
-            <!--<div class="filter-select-box">
-
-                <button class="filter-select" data-select>
-
-                    <div class="select-value" data-select-value>Select category</div>
-
-                    <div class="select-icon">
-                        <ion-icon name="chevron-down"></ion-icon>
-                    </div>
-
-                </button>
-
-                <ul class="select-list">
-
-                    <li class="select-item">
-                        <a href="{{route('page.portfolio')}}">All</a>
-                    </li>
-
-                    @foreach (\App\Models\Portfolio::categories() as $category)
-                <li class="select-item">
-                    <a href="{{route('page.portfolio',['cat'=>$category])}}">{{$category}}</a>
-                </li>
-                @endforeach
-
-                </ul>
-
-            </div> this thing needs javascript anyway-->
-
-            <!--  TODO MAKE THE PROJECT PART LIKE A BLOG POST-->
-
             <ul class="project-list">
                 @foreach (\App\Models\Portfolio::all()->toArray() as $item)
                 @if(!isset($_GET['cat'])||$_GET['cat']==$item['CATEGORY'])
@@ -59,7 +29,7 @@
                                 <button select-project><ion-icon name="eye-outline"></ion-icon></button>
                             </div>
 
-                            <img src="{{asset($item['IMAGE_URL'])}}" alt loading="lazy">
+                            <img src="{{asset($item['IMAGE_URL']?? 'images/default-blog.jpeg')}}" alt loading="lazy">
                         </figure>
 
                         <h3 class="project-title">{{$item['TITLE']}}</h3>
@@ -90,6 +60,12 @@
                     </div>
                     @endif
                     @endauth
+                    @guest
+                    <span class="icon-box project-interact">
+                    <ion-icon name=thumbs-up-outline aria-label=Likes role="img" class="md hydrated"></ion-icon>
+                        {{$item['LIKE_COUNT']>0?$item['LIKE_COUNT']:""}}
+</span>
+                    @endguest
                 </li>
                 @endif
                 @endforeach

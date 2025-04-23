@@ -16,10 +16,18 @@ php artisan serve
 
 php artisan tinker
 
-User::create([
-'EMAIL' => 'admin@example.com',
-'PW' => bcrypt('admin123'),
-'USER_TYPE' => 0,
-'FIRST_NAME' => 'Admin',
-'LAST_NAME' => 'User',
+for ($i = 1; $i <= 10; $i++) {
+\App\Models\User::create([
+'FIRST_NAME' => 'User' . $i,
+'LAST_NAME' => 'Example',
+'EMAIL' => "user{$i}@example.com",
+'PW' => bcrypt('password'),
+'PHONE_NUM' => '123-456-7890',
+'ADDRESS' => '123 Main St, Vancouver',
+'JOB_TITLE' => 'Developer',
+'BIRTHDAY' => '1990-01-01',
+'GITHUB' => 'https://github.com/user' . $i,
+'LINKED_IN' => 'https://linkedin.com/in/user' . $i,
+'INSTAGRAM' => 'https://instagram.com/user' . $i,
 ]);
+}

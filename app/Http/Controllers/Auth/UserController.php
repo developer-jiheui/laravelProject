@@ -24,194 +24,80 @@ class UserController extends Controller
             'password'   => 'required|confirmed|min:6',
         ]);
 
-        // Create user
-        //change this when we changed database to lower case
-//        User::create([
-//            'first_name' => $request->first_name,
-//            'last_name' => $request->last_name,
-//            'email' => $request->email,
-//            'password' => Hash::make($request->password),
-//            'user_type' => 1, // default role
-//        ]);
-        // Create user
+        // Check if this is the first user
+        $isFirstUser = User::count() === 0;
+
+        // Create user and set USER_TYPE accordingly
         User::create([
             'FIRST_NAME' => $request->first_name,
             'LAST_NAME'  => $request->last_name,
             'EMAIL'      => $request->email,
             'PW'         => Hash::make($request->password),
-            'USER_TYPE'  => 1, // default: common user
+            'USER_TYPE'  => $isFirstUser ? 0 : 1, // 0 = admin, 1 = regular user
+            'AVARAR'     => 'images/my-avatar.png'
         ]);
 
-        // Redirect to login page
-        return redirect()->route('page.show', ['name' => 'login'])->with('success', 'Registration successful. Please log in.');
+        return redirect()->route('page.show', ['name' => 'login'])
+            ->with('success', 'Registration successful. Please log in.');
     }
-
-    public function edit_profile(Request $request)
-    {
-        $user = Auth::user();
-
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:USER,EMAIL,' . $user->USER_ID . ',USER_ID',
-            'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'password' => 'nullable|confirmed|min:6',
-            // other validations...
-        ]);
-
-        // ✅ STEP 2: Upload profile photo to Cloudinary if present
-        if ($request->hasFile('profile_photo')) {
-            $file = $request->file('profile_photo');
-            $base64Image = base64_encode(file_get_contents($file->getRealPath()));
-
-            $response = Http::asForm()->post('https://api.cloudinary.com/v1_1/' . env('CLOUDINARY_CLOUD_NAME') . '/image/upload', [
-                'file' => 'data:' . $file->getMimeType() . ';base64,' . $base64Image,
-                'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
-                'public_id' => 'avatar_' . uniqid('cloud_', true), // ✅ Clean, no slashes
-            ]);
-
-            if ($response->successful()) {
-                $user->AVATAR = $response->json('secure_url');
-                $user->save();
-                return back()->with('success', 'Avatar uploaded and profile updated!');
-            } else {
-                return back()->withErrors(['profile_photo' => 'Cloudinary error: ' . $response->body()]);
-            }
-        }
-        // ✅ STEP 3: Update remaining fields
-        if ($request->filled('first_name')) {
-            $user->FIRST_NAME = $request->first_name;
-        }
-
-        if ($request->filled('last_name')) {
-            $user->LAST_NAME = $request->last_name;
-        }
-
-        if ($request->filled('email')) {
-            $user->EMAIL = $request->email;
-        }
-
-        if ($request->filled('address')) {
-            $user->ADDRESS = $request->address;
-        }
-
-        if ($request->filled('phone_num')) {
-            $user->PHONE_NUM = $request->phone_num;
-        }
-
-        if ($request->filled('bio')) {
-            $user->BIO = $request->bio;
-        }
-
-        if ($request->filled('job_title')) {
-            $user->JOB_TITLE = $request->job_title;
-        }
-
-        if ($request->filled('birthday')) {
-            $user->BIRTHDAY = $request->birthday;
-        }
-
-        if ($request->filled('github')) {
-            $user->GITHUB_URL = $request->github;
-        }
-
-        if ($request->filled('linked_in')) {
-            $user->LINKEDIN_URL = $request->linked_in;
-        }
-
-        if ($request->filled('instagram')) {
-            $user->INSTAGRAM_URL = $request->instagram;
-        }
-
-        if ($request->filled('password')) {
-            $user->PW = bcrypt($request->password);
-        }
-
-        $user->save();
-
-        return redirect()->back()->with('success', 'Profile updated!');
-    }
-
-// ✅ Don't forget to set CLOUD_NAME and UPLOAD_PRESET in your .env or config
-
 
 
     public function update(Request $request)
     {
         $user = Auth::user();
 
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name'  => 'required|string|max:255',
-            'email'      => 'required|email|unique:USER,EMAIL,' . $user->USER_ID . ',USER_ID',
-            'password'   => 'nullable|confirmed|min:6',
-            'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            // add other fields validations here...
+        $validated = $request->validate([
+            'first_name'     => 'required|string|max:255',
+            'last_name'      => 'required|string|max:255',
+            'email'          => 'required|email|unique:USER,EMAIL,' . $user->USER_ID . ',USER_ID',
+            'password'       => 'nullable|confirmed|min:6',
+            'profile_photo'  => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'address'        => 'nullable|string|max:255',
+            'phone_num'      => 'nullable|string|max:255',
+            'bio'            => 'nullable|string|max:255',
+            'job_title'      => 'nullable|string|max:255',
+            'birthday'       => 'nullable|date',
+            'github'         => 'nullable|string|max:255',
+            'linked_in'      => 'nullable|string|max:255',
+            'instagram'      => 'nullable|string|max:255',
         ]);
 
-        // Upload avatar if present
+        // Handle profile photo upload
         if ($request->hasFile('profile_photo')) {
             $file = $request->file('profile_photo');
             $filename = uniqid('avatar_', true) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/avatars'), $filename); // ✅ Move directly to public/images/avatars
-
-            $user->AVATAR = 'images/avatars/' . $filename; // ✅ Save the path to use in <img src="{{ asset(...) }}">
+            $file->move(public_path('images/avatars'), $filename);
+            $user->AVATAR = 'images/avatars/' . $filename;
         }
 
-        if ($request->filled('first_name')) {
-            $user->FIRST_NAME = $request->first_name;
+        // Assign validated fields (except password and profile_photo)
+        $fieldMap = [
+            'first_name' => 'FIRST_NAME',
+            'last_name'  => 'LAST_NAME',
+            'email'      => 'EMAIL',
+            'address'    => 'ADDRESS',
+            'phone_num'  => 'PHONE_NUM',
+            'bio'        => 'BIO',
+            'job_title'  => 'JOB_TITLE',
+            'birthday'   => 'BIRTHDAY',
+            'github'     => 'GITHUB_URL',
+            'linked_in'  => 'LINKEDIN_URL',
+            'instagram'  => 'INSTAGRAM_URL',
+        ];
+
+        foreach ($fieldMap as $requestField => $dbField) {
+            if (isset($validated[$requestField])) {
+                $user->{$dbField} = $validated[$requestField];
+            }
         }
 
-        if ($request->filled('last_name')) {
-            $user->LAST_NAME = $request->last_name;
+        // Handle password separately
+        if (!empty($validated['password'])) {
+            $user->PW = bcrypt($validated['password']);
         }
-
-        if ($request->filled('email')) {
-            $user->EMAIL = $request->email;
-        }
-
-        if ($request->filled('address')) {
-            $user->ADDRESS = $request->address;
-        }
-
-        if ($request->filled('phone_num')) {
-            $user->PHONE_NUM = $request->phone_num;
-        }
-
-        if ($request->filled('bio')) {
-            $user->BIO = $request->bio;
-        }
-
-        if ($request->filled('job_title')) {
-            $user->JOB_TITLE = $request->job_title;
-        }
-
-        if ($request->filled('birthday')) {
-            $user->BIRTHDAY = $request->birthday;
-        }
-
-        if ($request->filled('github')) {
-            $user->GITHUB_URL = $request->github;
-        }
-
-        if ($request->filled('linked_in')) {
-            $user->LINKEDIN_URL = $request->linked_in;
-        }
-
-        if ($request->filled('instagram')) {
-            $user->INSTAGRAM_URL = $request->instagram;
-        }
-
-        if ($request->filled('password')) {
-            $user->PW = bcrypt($request->password);
-        }
-//        if (!empty($request->password)) {
-//            $user->PW = bcrypt($request->password);
-//        }
 
         $user->save();
 
         return redirect()->back()->with('success', 'Profile updated!');
     }
-
 }

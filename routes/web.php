@@ -5,7 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\AdminController;
-
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +19,34 @@ use App\Http\Controllers\Auth\AdminController;
 */
 
 //-------JIHEUI
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessage;
+
+
+Route::post('/send-email', function (\Illuminate\Http\Request $request) {
+    try {
+        $data = $request->validate([
+            'senderName' => 'required|string',
+            'senderEmail' => 'required|email',
+            'emailContent' => 'required|string',
+        ]);
+
+        Log::info("sending email to admin", $data);
+        Mail::to('developer.jiheuilee@gmail.com')->send(new ContactMessage($data));
+        return response()->json([
+            'message' => '✅ Email sent successfully!',
+        ]);
+    } catch (\Throwable $e) {
+        Log::error("❌ Email failed", [
+            'error' => $e->getMessage(),
+        ]);
+        return response()->json([
+            'error' => 'Failed to send email.',
+            'details' => $e->getMessage()
+        ], 500);
+    }
+});
 //PAGES
 Route::get('/', [PageController::class, 'show'])->defaults('name', 'home')->name('home');
 Route::get('/page/{name}', [PageController::class, 'show'])->name('page.show');
@@ -39,8 +67,9 @@ Route::middleware('auth')->post('/update/profile', [UserController::class, 'upda
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.home');
 });
-Route::get('/admin/profile', function () {return view('admin.profile');})->middleware('auth')->name('admin.profile');
-
+Route::get('/admin/profile', [AdminController::class, 'profile'])
+    ->middleware('auth')
+    ->name('admin.profile');Route::post('/admin/update', [AdminController::class, 'update'])->middleware('auth')->name('admin.update');
 Route::get('/admin-debug', function () {
     $users = \App\Models\User::all();
     return view('pages.admin', compact('users'));
@@ -60,12 +89,12 @@ Route::get('/profile', function () {return view('pages.profile');})->middleware(
 Route::middleware('auth')->get('/edit/home', function () {
     return view('edit.home');
 })->name('edit.home');
-Route::middleware('auth')->get('/edit/bio', function () {
-    return view('edit.bio');
-})->name('edit.bio');
-Route::middleware('auth')->get('/edit/blog', function () {
+Route::middleware('auth')->get('/edit/portfolio', function () {
+    return view('edit.portfolio');
+})->name('edit.portfolio');
+/* Route::middleware('auth')->get('/edit/blog', function () {
     return view('edit.blog');
-})->name('edit.blog');
+})->name('edit.blog'); */
 
 
 //VIATRIX ---------------
@@ -92,3 +121,11 @@ Route::get('/edit/blog', function () {
 Route::delete('/edit/blog/delete','App\Http\Controllers\BlogController@delete')->name('edit.blog.delete');
 Route::patch('/edit/blog/update','App\Http\Controllers\BlogController@edit')->name('edit.blog.update');
 Route::post('/edit/blog/create','App\Http\Controllers\BlogController@create')->name('edit.blog.create');
+Route::middleware(['auth'])->post('/page/blog/comment','App\Http\Controllers\CommentController@create')->name('page.blog.comment');
+Route::patch('/page/blog/comment/update','App\Http\Controllers\CommentController@edit')->name('page.blog.comment.update');
+Route::delete('/page/blog/comment/delete','App\Http\Controllers\CommentController@delete')->name('page.blog.comment.delete');
+
+//route to set up blogfull
+Route::get('/page/blogfull', function () {
+    return view('page.blogfull');
+})->name('page.blogfull');
