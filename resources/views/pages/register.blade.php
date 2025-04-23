@@ -50,7 +50,7 @@
 
                 <div class="input-wrapper">
                     <label for="password" class="form-label h5">Password</label>
-                    <input type="password" id="password" name="password" class="form-input" required placeholder="At least 6 words" pattern=".{6,}">
+                    <input type="password" id="password" name="password" class="form-input" required placeholder="At least 6 characters" pattern=".{6,}">
                     @error('password')
                     <div></div><small class="text-danger" style="color:red">{{ $message }}</small>
                     @enderror
