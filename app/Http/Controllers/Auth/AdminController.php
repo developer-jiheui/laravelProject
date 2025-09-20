@@ -11,11 +11,14 @@ use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
 {
+
+
     /**
      * Show all users to the admin.
      */
     public function index()
     {
+        $superAdmin = User::find(1);
         $user = Auth::user();
 
         // If user not logged in or user is not admin
@@ -25,9 +28,67 @@ class AdminController extends Controller
         }
 
         $users = User::all();
-        return view('pages.admin', compact('users'));
+        return view('pages.admin', compact('users','superAdmin'));
     }
 
+    /*
+     * admin profile
+     * */
+    public function profile()
+    {
+        $superAdmin = User::find(1); // the first user : super admin
+        return view('admin.profile', compact('superAdmin'));
+    }
+    /*
+    * Update Admin
+     */
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'first_name'     => 'required|string|max:255',
+            'last_name'      => 'required|string|max:255',
+            'email'          => 'required|email|unique:USER,EMAIL,' . $user->USER_ID . ',USER_ID',
+            'password'       => 'nullable|confirmed|min:6',
+            'profile_photo'  => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'address'        => 'required|string|max:255',
+            'phone_num'      => 'required|string|max:255',
+            'bio'            => 'nullable|string|max:255',
+            'job_title'      => 'required|string|max:255',
+            'birthday'       => 'required|date',
+            'github'         => 'nullable|string|max:255',
+            'linked_in'      => 'nullable|string|max:255',
+            'instagram'      => 'nullable|string|max:255',
+        ]);
+
+        if ($request->hasFile('profile_photo')) {
+            $file = $request->file('profile_photo');
+            $filename = uniqid('avatar_', true) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/avatars'), $filename);
+            $user->AVATAR = 'images/avatars/' . $filename;
+        }
+
+        $user->FIRST_NAME    = $request->first_name;
+        $user->LAST_NAME     = $request->last_name;
+        $user->EMAIL         = $request->email;
+        $user->ADDRESS       = $request->address;
+        $user->PHONE_NUM     = $request->phone_num;
+        $user->BIO           = $request->bio;
+        $user->JOB_TITLE     = $request->job_title;
+        $user->BIRTHDAY      = $request->birthday;
+        $user->GITHUB_URL    = $request->github;
+        $user->LINKEDIN_URL  = $request->linked_in;
+        $user->INSTAGRAM_URL = $request->instagram;
+
+        if ($request->filled('password')) {
+            $user->PW = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated!');
+    }
     /**
      * Promote a user to admin.
      */

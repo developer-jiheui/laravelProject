@@ -1,12 +1,24 @@
 @extends('layouts.main')
 @section('content')
+    @php
+        // Pull super admin (USER_TYPE = 0 ) and recent content
+        $superAdmin = \App\Models\User::where('USER_TYPE', 0)->first();
+        $latestBlogs = \App\Models\Blog::orderByDesc('CREATED_AT')->limit(3)->get();
+        $recentWorks = \App\Models\Portfolio::orderByDesc('UPDATED_AT')->limit(6)->get();
+        $testimonials = \App\Models\Testimonial::where('pinned',1)->get();
+    @endphp
+
     <article class="home  active" data-page="home">
 
         <header>
-            <!-- <h2 class="h2 article-title">About me</h2> -->
+            <h2 class="h2 article-title">About me</h2>
         </header>
 
         <section class="about-text">
+            <p>
+                {{ $superAdmin->BIO ?? 'I build fast, modern web apps and elegant UI.' }}
+            </p>
+
         </section>
 
         <!--
@@ -22,8 +34,7 @@
                 <li class="service-item">
 
                     <div class="service-icon-box">
-                        <img src="{{asset('images/icon-design.svg')}}
-                " alt="design icon" width="40">
+                        <img src="{{ asset('images/icon-design.svg') }}" alt="design icon" width="40">
                     </div>
 
                     <div class="service-content-box">
@@ -39,7 +50,7 @@
                 <li class="service-item">
 
                     <div class="service-icon-box">
-                        <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
+                        <img src="{{ asset('images/icon-dev.svg') }}" alt="Web development icon" width="40">
                     </div>
 
                     <div class="service-content-box">
@@ -55,7 +66,7 @@
                 <li class="service-item">
 
                     <div class="service-icon-box">
-                        <img src="{{asset('images/icon-app.svg')}}" alt="mobile app icon" width="40">
+                        <img src="{{ asset('images/icon-app.svg') }}" alt="mobile app icon" width="40">
                     </div>
 
                     <div class="service-content-box">
@@ -71,7 +82,7 @@
                 <li class="service-item">
 
                     <div class="service-icon-box">
-                        <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
+                        <img src="{{ asset('images/icon-photo.svg') }}" alt="camera icon" width="40">
                     </div>
 
                     <div class="service-content-box">
@@ -94,83 +105,34 @@
         -->
 
         <section class="testimonials">
-
             <h3 class="h3 testimonials-title">Testimonials</h3>
-
             <ul class="testimonials-list has-scrollbar">
+                @forelse($testimonials as $t)
+                    <li class="testimonials-item">
+                        <div class="content-card" data-testimonials-item
+                             data-author-title="{{ $t->author_title ?? '' }}">
 
-                <li class="testimonials-item">
-                    <div class="content-card" data-testimonials-item>
+                            <figure class="testimonials-avatar-box">
+                                <img data-testimonials-avatar
+                                     src="{{ $t->author_avatar_url ? asset($t->author_avatar_url) : asset('images/default-avatar.png') }}"
+                                     alt="{{ $t->author_name }}"
+                                     width="60" data-testimonials-avatar>
+                            </figure>
 
-                        <figure class="testimonials-avatar-box">
-                            <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                        </figure>
+                            <h4 class="h4 testimonials-item-title" data-testimonials-title>{{ $t->author_name }}</h4>
 
-                        <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel lewis</h4>
-
-                        <div class="testimonials-text" data-testimonials-text>
-                            <p>
-                                Blah blal
-                            </p>
+                            <div class="testimonials-text" data-testimonials-text>
+                                <p>
+                                    {{$t->body}}
+                                </p>
+                            </div>
                         </div>
-
-                    </div>
-                </li>
-
-                <li class="testimonials-item">
-                    <div class="content-card" data-testimonials-item>
-
-                        <figure class="testimonials-avatar-box">
-                            <img src="./assets/images/avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
-                        </figure>
-
-                        <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
-
-                        <div class="testimonials-text" data-testimonials-text>
-                            <p>
-                                Blah Blah
-                            </p>
-                        </div>
-
-                    </div>
-                </li>
-
-                <li class="testimonials-item">
-                    <div class="content-card" data-testimonials-item>
-
-                        <figure class="testimonials-avatar-box">
-                            <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
-                        </figure>
-
-                        <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
-
-                        <div class="testimonials-text" data-testimonials-text>
-                            <p>
-                                Blah Blah
-                            </p>
-                        </div>
-
-                    </div>
-                </li>
-
-                <li class="testimonials-item">
-                    <div class="content-card" data-testimonials-item>
-
-                        <figure class="testimonials-avatar-box">
-                            <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                        </figure>
-
-                        <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                        <div class="testimonials-text" data-testimonials-text>
-                            <p>
-                                Blah Blah
-                            </p>
-                        </div>
-
-                    </div>
-                </li>
-
+                    </li>
+                @empty
+                    <p>
+                        NO Testimonial yet
+                    </p>
+                @endforelse
             </ul>
 
         </section>
@@ -181,35 +143,27 @@
         -->
 
         <div class="modal-container" data-modal-container>
-
             <div class="overlay" data-overlay></div>
-
             <section class="testimonials-modal">
-
                 <button class="modal-close-btn" data-modal-close-btn>
                     <ion-icon name="close-outline"></ion-icon>
                 </button>
 
                 <div class="modal-img-wrapper">
                     <figure class="modal-avatar-box">
-                        <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
+                        <img src="" alt="" width="80" data-modal-img>
                     </figure>
-
-                    <img src="./assets/images/icon-quote.svg" alt="quote icon">
+                    <div class="modal-quote">
+                        <img src="{{ asset("/images/icon-quote.svg") }}" alt="quote icon">
+                    </div>
                 </div>
 
                 <div class="modal-content">
-
-                    <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
-
-                    <time datetime="2021-06-14">14 June, 2021</time>
-
-                    <div data-modal-text>
-                        <p>
-                            rorem blah
-                        </p>
+                    <h4 class="modal-title" data-modal-title></h4>
+                    <p class="modal-author-title" data-modal-author-title></p>
+                    <div class="modal-text" data-modal-text>
+                        <p></p>
                     </div>
-
                 </div>
 
             </section>
@@ -221,59 +175,49 @@
           - clients
         -->
 
-        <section class="clients">
+        <section class="recent-works">
+            <h3 class="h3 service-title">Recent works</h3>
 
-            <h3 class="h3 clients-title">Clients</h3>
+            <div class="recent-scroll-wrap">
 
-            <ul class="clients-list has-scrollbar">
+                <ul class="recent-list has-scrollbar" id="recent-list">
+                    @foreach (\App\Models\Portfolio::latest()->take(12)->get() as $p)
+                        <li class="recent-item">
+                            <a href="{{ route('page.portfoliofull', ['id' => $p->id]) }}" class="recent-card">
+                                <figure class="recent-thumb">
+                                    <img
+                                        src="{{ asset($p->image_url ?? 'images/default-icon.svg') }}"
+                                        alt="{{ $p->title }}"
+                                        loading="lazy"
+                                    >
+                                </figure>
 
-                <li class="clients-item">
-                    <a href="#">
-                        <img src="./assets/images/logo-1-color.png" alt="client logo">
-                    </a>
-                </li>
+                                <div class="recent-body">
+                                    <h4 class="h5 recent-title">{{ $p->title }}</h4>
+                                    <p class="recent-desc">
+                                        {{ \Illuminate\Support\Str::limit(strip_tags($p->description), 80) }}
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
 
-                <li class="clients-item">
-                    <a href="#">
-                        <img src="./assets/images/logo-2-color.png" alt="client logo">
-                    </a>
-                </li>
 
-                <li class="clients-item">
-                    <a href="#">
-                        <img src="./assets/images/logo-3-color.png" alt="client logo">
-                    </a>
-                </li>
-
-                <li class="clients-item">
-                    <a href="#">
-                        <img src="./assets/images/logo-4-color.png" alt="client logo">
-                    </a>
-                </li>
-
-                <li class="clients-item">
-                    <a href="#">
-                        <img src="./assets/images/logo-5-color.png" alt="client logo">
-                    </a>
-                </li>
-
-                <li class="clients-item">
-                    <a href="#">
-                        <img src="./assets/images/logo-6-color.png" alt="client logo">
-                    </a>
-                </li>
-
-            </ul>
-
+            </div>
         </section>
 
+
     </article>
-    {{--    @auth--}}
-    {{--        <a href="{{ route('edit.home') }}" class="edit-page-button">--}}
-    {{--            ✏️ Edit Home--}}
-    {{--        </a>--}}
-    {{--    @endauth--}}
-    <a href="{{ route('edit.home') }}" class="edit-page-button">
-        ✏️ Edit Home
-    </a>
+    <x-modal id="homeModal" variant="warning"
+             size="md" :openOnLoad="!($dismissedModals['home'] ?? false)">
+        <x-slot:actions>
+
+            <label class="warning-dismiss">
+                <input type="checkbox" data-dismiss-key="home" id="dont-show-home">
+                Don’t show this message again
+            </label>
+        </x-slot:actions>
+    </x-modal>
+
 @endsection
