@@ -8,10 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="modal-dismiss-url" content="{{ route('modal.dismiss') }}">
 
-    <title>Developer Jiheui</title>
+    <title>Zia Lee</title>
 
     {{-- Favicon (served from public/images) --}}
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="icon" type="image/png"
+          href="{{ asset('images/logo.png') }}?v={{ filemtime(public_path('images/logo.png')) }}">
 
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
