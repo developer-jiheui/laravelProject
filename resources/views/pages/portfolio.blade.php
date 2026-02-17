@@ -20,19 +20,19 @@
                     ->values();            // reindex
             @endphp
                 <!-- Filter list-->
-            <ul class="filter-list">
-                <li class="filter-item">
-                    <button data-filter-btn class="active" data-category="all">All</button>
-                </li>
+            {{--            <ul class="filter-list">--}}
+            {{--                <li class="filter-item">--}}
+            {{--                    <button data-filter-btn class="active" data-category="all">All</button>--}}
+            {{--                </li>--}}
 
-                @foreach($allTechs as $tech)
-                    <li class="filter-item">
-                        <button data-filter-btn data-category="{{ Str::slug($tech) }}">
-                            {{ $tech }}
-                        </button>
-                    </li>
-                @endforeach
-            </ul>
+            {{--                @foreach($allTechs as $tech)--}}
+            {{--                    <li class="filter-item">--}}
+            {{--                        <button data-filter-btn data-category="{{ Str::slug($tech) }}">--}}
+            {{--                            {{ $tech }}--}}
+            {{--                        </button>--}}
+            {{--                    </li>--}}
+            {{--                @endforeach--}}
+            {{--            </ul>--}}
 
             <!-- PROJECT LIST -->
             <ul class="project-list">
