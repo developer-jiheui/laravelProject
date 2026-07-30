@@ -33,6 +33,92 @@
                    style="color:var(--orange-yellow-crayola);">GitHub</a>
             @endif
         </div>
+
+
+        {{--        comments        --}}
+
+        <div class="separator"></div>
+        <div class="blog-footer">
+            @php
+                $comments = \App\Models\Comment::where('blog_id','=',request('id'))->get();
+            @endphp
+            <div class="comment-count">
+                @if (empty($comments))
+                    <div class="comment-count-text">No responses yet</div>
+                @else
+                    <div class="comment-count-text">Responses ( {{$comments->count()}} )</div>
+                @endif
+            </div>
+            @auth
+                <div class="comment-input-container">
+                    <div class="comment-user-info">
+                        <div class="comment-avatar">
+                            @if (Auth::user()->avatar)
+                                <img src="{{ asset(Auth::user()->avatar) }}" alt="avatar">
+                            @else
+                                <img src="{{ asset('images/default-avatar.png') }}" alt="Default avatar">
+                            @endif
+                        </div>
+                        <div class="comment-user">
+                            @php
+                                $name = trim((Auth::user()->first_name ?? '') . ' ' . (Auth::user()->last_name ?? ''));
+                            @endphp
+
+                            @if ($name)
+                                {{ $name }}
+                            @else
+                                No Name
+                            @endif
+                        </div>
+                    </div>
+                    <div class="">
+                        <form method=post action="{{route('page.blog.comment')}}" class="comment-text-container">
+                            @csrf
+                            <div class="comment-text-area">
+                                <textarea name=content required class="comment-input-text"
+                                          placeholder="what's your thoughts?"></textarea>
+                                <input type=hidden name=blog_id value="{{request('id')}}">
+                            </div>
+                            <div class="comment-btn-container">
+                                <button class="comment-submit-btn" type=submit>Respond</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            @endauth
+            @guest
+                <div class="comment-input-container">
+                    <div class="comment-user-info">
+                        <div class="comment-avatar">
+                            <img src="{{ asset('images/default-avatar.png') }}" alt="Default avatar">
+                        </div>
+                        <div class="comment-user">
+                            write a response
+                        </div>
+                    </div>
+                    <div class="comment-text-container">
+                        <form method=post action="{{route('page.blog.comment')}}">
+                            @csrf
+                            <textarea name=content required class="comment-input-text"
+                                      placeholder="what's your thoughts?"></textarea>
+                            <input type=hidden name=blog_id value="{{request('id')}}">
+                            <div class="comment-btn-container">
+                                <button class="comment-submit-btn" type=submit>Respond</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            @endguest
+
+            <div class="separator"></div>
+
+
+        </div>
+
     </article>
 @endsection
 
